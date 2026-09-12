@@ -185,17 +185,34 @@
   .panel-head.ok{background:var(--good-soft);}
   .panel-head h2{font-size:17px;}
   .panel-head .tag{font-size:12.5px;color:var(--ink-soft);font-family:var(--font-body);font-weight:400;}
+  .panel-head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
   .panel-total{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:600;font-size:16px;}
   .panel-body{padding:6px 20px 16px;}
   .order-row{
-    display:grid;grid-template-columns:1fr auto auto auto;gap:14px;align-items:center;
     padding:10px 0;border-bottom:1px dashed var(--border);font-size:13.5px;
   }
   .order-row:last-child{border-bottom:none;}
+  .order-row-main{
+    display:grid;grid-template-columns:1fr auto auto auto;gap:14px;align-items:center;
+  }
   .order-row .name{font-weight:500;}
   .order-row .meta{color:var(--ink-soft);font-size:12.5px;}
   .order-row .qty{font-family:var(--font-mono);text-align:right;white-space:nowrap;}
   .order-row .cost{font-family:var(--font-mono);text-align:right;font-weight:600;white-space:nowrap;min-width:70px;}
+  .order-pack-hint{margin-top:4px;font-size:12.5px;color:var(--indigo);font-weight:500;}
+  .order-last{margin-top:2px;font-size:12px;color:var(--ink-soft);font-style:italic;}
+  .order-unit-config{
+    margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+    padding-top:8px;border-top:1px dotted var(--border);
+  }
+  .order-unit-input{
+    border:1px solid var(--border);border-radius:8px;padding:5px 9px;font-size:12.5px;
+    background:var(--paper-sunken);color:var(--ink);
+  }
+  .order-unit-input[type="text"]{width:150px;}
+  .order-unit-input.order-unit-size{width:56px;text-align:center;}
+  .order-unit-x{color:var(--ink-soft);font-size:12.5px;}
+  .order-unit-caption{color:var(--ink-soft);font-size:11.5px;}
   .empty-good{padding:18px 4px;color:var(--good);font-size:14px;display:flex;gap:10px;align-items:center;}
 
   /* ---------- toolbar ---------- */
@@ -223,6 +240,7 @@
   .btn.ghost{background:transparent;color:var(--indigo);border:1px solid var(--indigo);}
   .btn.accent{background:var(--marigold);}
   .btn.accent:hover{background:var(--marigold-strong);}
+  .btn.small{padding:6px 12px;font-size:12.5px;}
 
   /* ---------- category sections ---------- */
   .category{margin-bottom:26px;}
@@ -642,6 +660,7 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 (function(){
   "use strict";
@@ -673,6 +692,22 @@
       reorderOrderQty:"commander {n}",
       reorderPriceUnknown:"prix ?",
       reorderPerUnit:"/u",
+      orderUnitLabel:"Unité de commande",
+      orderUnitPlaceholder:"ex. boîte, sac",
+      orderUnitSizeLabel:"Qté/unité",
+      orderUnitDefault:"à l'unité",
+      orderToBuy:"→ commander {n} {unit}",
+      reorderLastOrder:"Dernière commande : {qty} le {date}",
+      reorderConfirmOrder:"Confirmer la commande",
+      reorderExportExcel:"Exporter en Excel",
+      xlsFilenamePrefix:"bon-de-commande",
+      xlsCategory:"Catégorie",
+      xlsSuggestedQty:"Qté suggérée (unités)",
+      xlsQtyToOrder:"Qté à commander",
+      xlsEstimatedCost:"Coût estimé",
+      xlsLastOrderQty:"Dernière commande (qté)",
+      xlsLastOrderDate:"Dernière commande (date)",
+      xlsSheetTitle:"Bon de commande",
       tableArticle:"Article",
       tableCurrent:"Stock actuel",
       tableThreshold:"Seuil",
@@ -784,6 +819,22 @@
       reorderOrderQty:"order {n}",
       reorderPriceUnknown:"price ?",
       reorderPerUnit:"/unit",
+      orderUnitLabel:"Order unit",
+      orderUnitPlaceholder:"e.g. box, bag",
+      orderUnitSizeLabel:"Qty/unit",
+      orderUnitDefault:"individually",
+      orderToBuy:"→ order {n} {unit}",
+      reorderLastOrder:"Last order: {qty} on {date}",
+      reorderConfirmOrder:"Confirm order",
+      reorderExportExcel:"Export to Excel",
+      xlsFilenamePrefix:"purchase-order",
+      xlsCategory:"Category",
+      xlsSuggestedQty:"Suggested qty (units)",
+      xlsQtyToOrder:"Qty to order",
+      xlsEstimatedCost:"Estimated cost",
+      xlsLastOrderQty:"Last order (qty)",
+      xlsLastOrderDate:"Last order (date)",
+      xlsSheetTitle:"Order list",
       tableArticle:"Item",
       tableCurrent:"Current stock",
       tableThreshold:"Threshold",
@@ -895,6 +946,22 @@
       reorderOrderQty:"pedir {n}",
       reorderPriceUnknown:"¿precio?",
       reorderPerUnit:"/u",
+      orderUnitLabel:"Unidad de pedido",
+      orderUnitPlaceholder:"ej. caja, bolsa",
+      orderUnitSizeLabel:"Cant./unidad",
+      orderUnitDefault:"por unidad",
+      orderToBuy:"→ pedir {n} {unit}",
+      reorderLastOrder:"Último pedido: {qty} el {date}",
+      reorderConfirmOrder:"Confirmar pedido",
+      reorderExportExcel:"Exportar a Excel",
+      xlsFilenamePrefix:"orden-de-compra",
+      xlsCategory:"Categoría",
+      xlsSuggestedQty:"Cant. sugerida (unidades)",
+      xlsQtyToOrder:"Cant. a pedir",
+      xlsEstimatedCost:"Costo estimado",
+      xlsLastOrderQty:"Último pedido (cant.)",
+      xlsLastOrderDate:"Último pedido (fecha)",
+      xlsSheetTitle:"Orden de compra",
       tableArticle:"Artículo",
       tableCurrent:"Inventario actual",
       tableThreshold:"Umbral",
@@ -1165,7 +1232,8 @@
     ["cardstock","occasionnel",20,"Papier cartonné (cardstock)","paquet",""]
   ].map(function(r){
     return {id:r[0], category:r[1], order:r[2], name:r[3], pack:r[4], note:r[5],
-      qtyOnHand:null, reorderThreshold:null, targetStock:null, unitCost:null, photo:null};
+      qtyOnHand:null, reorderThreshold:null, targetStock:null, unitCost:null, photo:null,
+      orderUnitLabel:"", orderUnitSize:1, lastOrderQty:null, lastOrderPacks:null, lastOrderLabel:"", lastOrderDate:null};
   });
 
   var state = {
@@ -1203,6 +1271,22 @@
     if (target==null) return null;
     var s = Math.ceil(target - qty);
     return s>0 ? s : 1;
+  }
+
+  // Unité d'achat (ex. "boîte de 32") distincte de l'unité de suivi du stock.
+  function orderUnitSizeOf(item){
+    var n = item.orderUnitSize==null ? 1 : Number(item.orderUnitSize);
+    return (!n || n<1) ? 1 : n;
+  }
+  function hasCustomOrderUnit(item){
+    return orderUnitSizeOf(item) > 1 && !!(item.orderUnitLabel && item.orderUnitLabel.trim());
+  }
+  // Convertit une quantité suggérée (en unités individuelles) en nombre
+  // d'unités de commande (arrondi au-dessus), ex. 40 yaourts / 32 = 2 boîtes.
+  function packsToOrder(item, suggestedUnits){
+    if (suggestedUnits==null) return null;
+    var size = orderUnitSizeOf(item);
+    return Math.ceil(suggestedUnits / size);
   }
 
   function itemsArray(){
@@ -1312,18 +1396,120 @@
       var sq = suggestedQty(it);
       var cost = (sq!=null && it.unitCost!=null) ? sq*it.unitCost : null;
       if (cost!=null){ total += cost; totalKnown = true; }
+
+      var packLine = "";
+      if (sq!=null && hasCustomOrderUnit(it)){
+        var packs = packsToOrder(it, sq);
+        packLine = '<div class="order-pack-hint">'+esc(t("orderToBuy",{n:packs, unit:it.orderUnitLabel}))+'</div>';
+      }
+
+      var lastOrderLine = "";
+      if (it.lastOrderQty!=null){
+        var unitTxt = it.lastOrderPacks!=null && it.lastOrderLabel
+          ? (it.lastOrderPacks+" "+it.lastOrderLabel+" ("+it.lastOrderQty+")")
+          : String(it.lastOrderQty);
+        lastOrderLine = '<div class="order-last">'+esc(t("reorderLastOrder",{qty:unitTxt, date: it.lastOrderDate ? fmtDateLocal(it.lastOrderDate) : "—"}))+'</div>';
+      }
+
       return '<div class="order-row">'+
+        '<div class="order-row-main">'+
         '<div><div class="name">'+esc(itemDisplayName(it))+'</div><div class="meta">'+esc(itemDisplayPack(it))+' · '+t("tableCurrent")+' '+(it.qtyOnHand!=null?it.qtyOnHand:"?")+' · '+t("tableThreshold")+' '+(it.reorderThreshold!=null?it.reorderThreshold:"?")+'</div></div>'+
         '<div class="qty">'+(sq!=null ? t("reorderOrderQty",{n:sq}) : t("reorderDefineThreshold"))+'</div>'+
         '<div class="qty">'+(it.unitCost!=null ? fmtMoney(it.unitCost)+t("reorderPerUnit") : t("reorderPriceUnknown"))+'</div>'+
         '<div class="cost">'+(cost!=null ? fmtMoney(cost) : "—")+'</div>'+
+        '</div>'+
+        packLine + lastOrderLine +
+        '<div class="order-unit-config">'+
+          '<input type="text" class="order-unit-input" data-order-id="'+esc(it.id)+'" data-order-field="orderUnitLabel" placeholder="'+esc(t("orderUnitPlaceholder"))+'" value="'+esc(it.orderUnitLabel||"")+'">'+
+          '<span class="order-unit-x">×</span>'+
+          '<input type="number" min="1" step="1" class="order-unit-input order-unit-size" data-order-id="'+esc(it.id)+'" data-order-field="orderUnitSize" value="'+esc(orderUnitSizeOf(it))+'">'+
+          '<span class="order-unit-caption">'+esc(t("orderUnitSizeLabel"))+'</span>'+
+        '</div>'+
         '</div>';
     }).join("");
 
     panel.innerHTML =
       '<div class="panel-head"><h2>'+t("reorderTitle")+'</h2>'+
-      '<span class="panel-total">'+(totalKnown ? fmtMoney(total) : "—")+'<span class="tag"> · '+trArticleCount(toReorder.length)+'</span></span></div>'+
+      '<div class="panel-head-right">'+
+      '<button type="button" class="btn ghost small" id="reorderExportBtn">📊 '+t("reorderExportExcel")+'</button>'+
+      '<button type="button" class="btn ghost small" id="reorderConfirmBtn">✓ '+t("reorderConfirmOrder")+'</button>'+
+      '<span class="panel-total">'+(totalKnown ? fmtMoney(total) : "—")+'<span class="tag"> · '+trArticleCount(toReorder.length)+'</span></span>'+
+      '</div></div>'+
       '<div class="panel-body">'+rows+'</div>';
+
+    wireReorderEvents(toReorder);
+  }
+
+  function wireReorderEvents(toReorder){
+    Array.prototype.forEach.call(document.querySelectorAll(".order-unit-input"), function(inp){
+      inp.addEventListener("change", function(){
+        var id = inp.dataset.orderId, field = inp.dataset.orderField;
+        var it = state.items[id];
+        if (!it) return;
+        var value = field==="orderUnitSize" ? (parseInt(inp.value,10) || 1) : inp.value;
+        it[field] = value;
+        renderReorderPanel();
+        commitField(id, field, value);
+      });
+    });
+    var exportBtn = document.getElementById("reorderExportBtn");
+    if (exportBtn) exportBtn.addEventListener("click", function(){ exportReorderExcel(toReorder); });
+    var confirmBtn = document.getElementById("reorderConfirmBtn");
+    if (confirmBtn) confirmBtn.addEventListener("click", function(){ confirmReorder(toReorder); });
+  }
+
+  function confirmReorder(toReorder){
+    var date = todayStr();
+    toReorder.forEach(function(it){
+      var sq = suggestedQty(it);
+      if (sq==null) return;
+      var packs = hasCustomOrderUnit(it) ? packsToOrder(it, sq) : null;
+      it.lastOrderQty = sq;
+      it.lastOrderPacks = packs;
+      it.lastOrderLabel = packs!=null ? it.orderUnitLabel : "";
+      it.lastOrderDate = date;
+      commitField(it.id, "lastOrderQty", sq);
+      commitField(it.id, "lastOrderPacks", packs);
+      commitField(it.id, "lastOrderLabel", it.lastOrderLabel);
+      commitField(it.id, "lastOrderDate", date);
+    });
+    renderReorderPanel();
+  }
+
+  function exportReorderExcel(toReorder){
+    if (typeof XLSX==="undefined"){ window.alert("Excel export unavailable (XLSX library failed to load)."); return; }
+    var header = [
+      t("xlsCategory"), t("tableArticle"), t("newPackLabel"), t("tableCurrent"), t("tableThreshold"),
+      t("xlsSuggestedQty"), t("orderUnitLabel"), t("xlsQtyToOrder"), t("tableUnitCost"), t("xlsEstimatedCost"),
+      t("xlsLastOrderQty"), t("xlsLastOrderDate")
+    ];
+    var rows = [header];
+    toReorder.forEach(function(it){
+      var sq = suggestedQty(it);
+      var custom = hasCustomOrderUnit(it);
+      var packs = custom ? packsToOrder(it, sq) : null;
+      var cost = (sq!=null && it.unitCost!=null) ? sq*it.unitCost : null;
+      rows.push([
+        catLabel(it.category),
+        itemDisplayName(it),
+        itemDisplayPack(it),
+        it.qtyOnHand!=null ? it.qtyOnHand : "",
+        it.reorderThreshold!=null ? it.reorderThreshold : "",
+        sq!=null ? sq : "",
+        custom ? it.orderUnitLabel : t("orderUnitDefault"),
+        custom ? packs : (sq!=null ? sq : ""),
+        it.unitCost!=null ? it.unitCost : "",
+        cost!=null ? cost : "",
+        it.lastOrderQty!=null ? it.lastOrderQty : "",
+        it.lastOrderDate ? fmtDateLocal(it.lastOrderDate) : ""
+      ]);
+    });
+    var ws = XLSX.utils.aoa_to_sheet(rows);
+    ws["!cols"] = [ {wch:14}, {wch:28}, {wch:16}, {wch:10}, {wch:8}, {wch:14}, {wch:16}, {wch:12}, {wch:10}, {wch:12}, {wch:14}, {wch:14} ];
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, t("xlsSheetTitle").slice(0,31));
+    var fname = t("xlsFilenamePrefix")+"-"+todayStr()+".xlsx";
+    XLSX.writeFile(wb, fname);
   }
 
   function renderChips(){
@@ -1680,7 +1866,8 @@
     var order = 1;
     itemsArray().forEach(function(it){ if (it.category===data.category && it.order>=order) order = it.order+1; });
     var item = {id:id, category:data.category, order:order, name:data.name, pack:data.pack||"", note:"",
-      qtyOnHand:null, reorderThreshold:null, targetStock:null, unitCost:null, photo:null};
+      qtyOnHand:null, reorderThreshold:null, targetStock:null, unitCost:null, photo:null,
+      orderUnitLabel:"", orderUnitSize:1, lastOrderQty:null, lastOrderPacks:null, lastOrderLabel:"", lastOrderDate:null};
     state.items[id] = item;
     renderKPIs(); renderReorderPanel(); renderTable();
     if (state.dbMode==="live" && itemsCol){
@@ -1702,7 +1889,13 @@
       reorderThreshold: data.reorderThreshold==null ? null : data.reorderThreshold,
       targetStock: data.targetStock==null ? null : data.targetStock,
       unitCost: data.unitCost==null ? null : data.unitCost,
-      photo: data.photo || null
+      photo: data.photo || null,
+      orderUnitLabel: data.orderUnitLabel || "",
+      orderUnitSize: (data.orderUnitSize==null || data.orderUnitSize==="") ? 1 : Number(data.orderUnitSize),
+      lastOrderQty: data.lastOrderQty==null ? null : data.lastOrderQty,
+      lastOrderPacks: data.lastOrderPacks==null ? null : data.lastOrderPacks,
+      lastOrderLabel: data.lastOrderLabel || "",
+      lastOrderDate: data.lastOrderDate || null
     };
   }
 
