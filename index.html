@@ -213,6 +213,10 @@
   .order-unit-input.order-unit-size{width:56px;text-align:center;}
   .order-unit-x{color:var(--ink-soft);font-size:12.5px;}
   .order-unit-caption{color:var(--ink-soft);font-size:11.5px;}
+  .order-qty-row{display:flex;align-items:center;gap:6px;justify-content:flex-end;font-family:var(--font-body);}
+  .order-qty-prefix{color:var(--ink-soft);font-size:12.5px;}
+  .order-qty-input{width:56px;text-align:center;font-weight:600;font-size:13.5px;}
+  .order-qty-unit{font-size:12.5px;font-weight:500;white-space:nowrap;}
   .empty-good{padding:18px 4px;color:var(--good);font-size:14px;display:flex;gap:10px;align-items:center;}
 
   /* ---------- toolbar ---------- */
@@ -690,13 +694,15 @@
       reorderAllGood:"✓ Tous les articles suivis sont au-dessus de leur seuil de réapprovisionnement.",
       reorderDefineThreshold:"définir un seuil",
       reorderOrderQty:"commander {n}",
+      reorderQtyPrefix:"commander",
       reorderPriceUnknown:"prix ?",
       reorderPerUnit:"/u",
       orderUnitLabel:"Unité de commande",
       orderUnitPlaceholder:"ex. boîte, sac",
-      orderUnitSizeLabel:"Qté/unité",
+      orderUnitSizeLabel:"unités contenues",
       orderUnitDefault:"à l'unité",
       orderToBuy:"→ commander {n} {unit}",
+      orderEquivalent:"= {n} unités",
       reorderLastOrder:"Dernière commande : {qty} le {date}",
       reorderConfirmOrder:"Confirmer la commande",
       reorderExportExcel:"Exporter en Excel",
@@ -817,13 +823,15 @@
       reorderAllGood:"✓ All tracked items are above their reorder threshold.",
       reorderDefineThreshold:"set a threshold",
       reorderOrderQty:"order {n}",
+      reorderQtyPrefix:"order",
       reorderPriceUnknown:"price ?",
       reorderPerUnit:"/unit",
       orderUnitLabel:"Order unit",
       orderUnitPlaceholder:"e.g. box, bag",
-      orderUnitSizeLabel:"Qty/unit",
+      orderUnitSizeLabel:"units per pack",
       orderUnitDefault:"individually",
       orderToBuy:"→ order {n} {unit}",
+      orderEquivalent:"= {n} units",
       reorderLastOrder:"Last order: {qty} on {date}",
       reorderConfirmOrder:"Confirm order",
       reorderExportExcel:"Export to Excel",
@@ -944,13 +952,15 @@
       reorderAllGood:"✓ Todos los artículos monitoreados están por encima de su umbral de reposición.",
       reorderDefineThreshold:"definir un umbral",
       reorderOrderQty:"pedir {n}",
+      reorderQtyPrefix:"pedir",
       reorderPriceUnknown:"¿precio?",
       reorderPerUnit:"/u",
       orderUnitLabel:"Unidad de pedido",
       orderUnitPlaceholder:"ej. caja, bolsa",
-      orderUnitSizeLabel:"Cant./unidad",
+      orderUnitSizeLabel:"unidades contenidas",
       orderUnitDefault:"por unidad",
       orderToBuy:"→ pedir {n} {unit}",
+      orderEquivalent:"= {n} unidades",
       reorderLastOrder:"Último pedido: {qty} el {date}",
       reorderConfirmOrder:"Confirmar pedido",
       reorderExportExcel:"Exportar a Excel",
@@ -1242,7 +1252,8 @@
     filter:"all",
     search:"",
     pendingTimers:{},
-    lang:getStoredLang()
+    lang:getStoredLang(),
+    orderQty:{}        // id -> quantité à commander saisie manuellement (en unité de commande), non persistée
   };
 
   var currencyFmt = new Intl.NumberFormat("en-US", {style:"currency", currency:"USD"});
@@ -1287,6 +1298,24 @@
     if (suggestedUnits==null) return null;
     var size = orderUnitSizeOf(item);
     return Math.ceil(suggestedUnits / size);
+  }
+
+  // Quantité à commander : saisie manuelle et directe (en unité de commande,
+  // ex. "boîte"), totalement indépendante du stock actuel/cible — ces derniers
+  // ne servent qu'à déclencher l'apparition de l'article dans le bon de
+  // commande, jamais à calculer combien en commander. Par défaut 1.
+  function getOrderQty(id){
+    var v = state.orderQty[id];
+    if (v==null || !(v>=1)){ v = 1; state.orderQty[id] = v; }
+    return v;
+  }
+  function orderUnitLabelOf(item){
+    var l = (item.orderUnitLabel||"").trim();
+    return l || t("orderUnitDefault");
+  }
+  function orderRowCost(item, qty){
+    if (item.unitCost==null) return null;
+    return qty * orderUnitSizeOf(item) * item.unitCost;
   }
 
   function itemsArray(){
@@ -1364,8 +1393,8 @@
     });
     var orderCost = 0, orderCostKnown = false;
     toReorder.forEach(function(it){
-      var sq = suggestedQty(it);
-      if (sq!=null && it.unitCost!=null){ orderCost += sq*it.unitCost; orderCostKnown = true; }
+      var cost = orderRowCost(it, getOrderQty(it.id));
+      if (cost!=null){ orderCost += cost; orderCostKnown = true; }
     });
 
     var tiles = [
@@ -1384,13 +1413,12 @@
     document.getElementById("kpis").innerHTML = html;
   }
 
-  function orderPackHintText(it, sizeOverride, labelOverride){
-    var sq = suggestedQty(it);
-    if (sq==null) return "";
-    var label = labelOverride!=null ? labelOverride.trim() : (it.orderUnitLabel||"").trim();
-    var size = sizeOverride!=null ? sizeOverride : orderUnitSizeOf(it);
-    if (!(size>1) || !label) return "";
-    return t("orderToBuy",{n:Math.ceil(sq/size), unit:label});
+  // Petit rappel du nombre d'unités individuelles que représente la quantité
+  // saisie (ex. "3 boîte(s)" -> "= 96 unités") — calculé uniquement à partir de
+  // ce que l'utilisateur a tapé, jamais à partir du stock actuel/cible.
+  function orderEquivalentText(qty, size){
+    if (!(size>1) || !(qty>=1)) return "";
+    return t("orderEquivalent",{n: qty*size});
   }
 
   function renderReorderPanel(){
@@ -1409,33 +1437,38 @@
 
     var total = 0, totalKnown = false;
     var rows = toReorder.map(function(it){
-      var sq = suggestedQty(it);
-      var cost = (sq!=null && it.unitCost!=null) ? sq*it.unitCost : null;
+      var qty = getOrderQty(it.id);
+      var size = orderUnitSizeOf(it);
+      var cost = orderRowCost(it, qty);
       if (cost!=null){ total += cost; totalKnown = true; }
 
-      var packHint = orderPackHintText(it);
+      var eqHint = orderEquivalentText(qty, size);
 
       var lastOrderLine = "";
-      if (it.lastOrderQty!=null){
-        var unitTxt = it.lastOrderPacks!=null && it.lastOrderLabel
-          ? (it.lastOrderPacks+" "+it.lastOrderLabel+" ("+it.lastOrderQty+")")
-          : String(it.lastOrderQty);
+      if (it.lastOrderPacks!=null){
+        var unitTxt = it.lastOrderLabel
+          ? (it.lastOrderPacks+" "+it.lastOrderLabel)
+          : String(it.lastOrderPacks);
         lastOrderLine = '<div class="order-last">'+esc(t("reorderLastOrder",{qty:unitTxt, date: it.lastOrderDate ? fmtDateLocal(it.lastOrderDate) : "—"}))+'</div>';
       }
 
       return '<div class="order-row">'+
         '<div class="order-row-main">'+
         '<div><div class="name">'+esc(itemDisplayName(it))+'</div><div class="meta">'+esc(itemDisplayPack(it))+' · '+t("tableCurrent")+' '+(it.qtyOnHand!=null?it.qtyOnHand:"?")+' · '+t("tableThreshold")+' '+(it.reorderThreshold!=null?it.reorderThreshold:"?")+'</div></div>'+
-        '<div class="qty">'+(sq!=null ? t("reorderOrderQty",{n:sq}) : t("reorderDefineThreshold"))+'</div>'+
-        '<div class="qty">'+(it.unitCost!=null ? fmtMoney(it.unitCost)+t("reorderPerUnit") : t("reorderPriceUnknown"))+'</div>'+
-        '<div class="cost">'+(cost!=null ? fmtMoney(cost) : "—")+'</div>'+
+        '<div class="qty order-qty-row">'+
+          '<span class="order-qty-prefix">'+esc(t("reorderQtyPrefix"))+'</span>'+
+          '<input type="number" min="1" step="1" inputmode="numeric" class="order-unit-input order-qty-input" data-order-id="'+esc(it.id)+'" data-order-field="orderQty" value="'+esc(qty)+'">'+
+          '<span class="order-qty-unit">'+esc(orderUnitLabelOf(it))+'</span>'+
         '</div>'+
-        '<div class="order-pack-hint" data-order-hint="'+esc(it.id)+'">'+esc(packHint)+'</div>'+
+        '<div class="qty">'+(it.unitCost!=null ? fmtMoney(it.unitCost)+t("reorderPerUnit") : t("reorderPriceUnknown"))+'</div>'+
+        '<div class="cost" data-order-cost="'+esc(it.id)+'">'+(cost!=null ? fmtMoney(cost) : "—")+'</div>'+
+        '</div>'+
+        '<div class="order-pack-hint" data-order-hint="'+esc(it.id)+'">'+esc(eqHint)+'</div>'+
         lastOrderLine +
         '<div class="order-unit-config">'+
           '<input type="text" class="order-unit-input" data-order-id="'+esc(it.id)+'" data-order-field="orderUnitLabel" placeholder="'+esc(t("orderUnitPlaceholder"))+'" value="'+esc(it.orderUnitLabel||"")+'">'+
           '<span class="order-unit-x">×</span>'+
-          '<input type="number" min="1" step="1" inputmode="numeric" class="order-unit-input order-unit-size" data-order-id="'+esc(it.id)+'" data-order-field="orderUnitSize" value="'+esc(orderUnitSizeOf(it))+'">'+
+          '<input type="number" min="1" step="1" inputmode="numeric" class="order-unit-input order-unit-size" data-order-id="'+esc(it.id)+'" data-order-field="orderUnitSize" value="'+esc(size)+'">'+
           '<span class="order-unit-caption">'+esc(t("orderUnitSizeLabel"))+'</span>'+
         '</div>'+
         '</div>';
@@ -1461,25 +1494,42 @@
       // "Qté/unité" à l'insu de la personne — on désactive ce comportement ici.
       inp.addEventListener("wheel", function(){ if (document.activeElement===inp) inp.blur(); }, {passive:true});
 
-      // Aperçu en direct (avant validation) pour que l'utilisateur voie tout de
-      // suite le résultat du calcul et repère une saisie incorrecte.
+      // Aperçu en direct (avant validation) : recalcule uniquement à partir de
+      // ce qui est tapé dans "Qté à commander" et "Qté/unité" — jamais à partir
+      // du stock actuel/cible.
       inp.addEventListener("input", function(){
         var id = inp.dataset.orderId;
         var it = state.items[id];
         if (!it) return;
         var row = inp.closest(".order-row");
-        var hint = row ? row.querySelector("[data-order-hint]") : null;
-        if (!hint) return;
-        var labelInput = row.querySelector('[data-order-field="orderUnitLabel"]');
+        if (!row) return;
+        var qtyInput = row.querySelector('[data-order-field="orderQty"]');
         var sizeInput = row.querySelector('[data-order-field="orderUnitSize"]');
-        var size = parseInt(sizeInput.value, 10) || 1;
-        hint.textContent = orderPackHintText(it, size, labelInput.value);
+        var qty = parseInt(qtyInput && qtyInput.value, 10) || 1;
+        var size = parseInt(sizeInput && sizeInput.value, 10) || 1;
+
+        var hint = row.querySelector("[data-order-hint]");
+        if (hint) hint.textContent = orderEquivalentText(qty, size);
+
+        var costEl = row.querySelector("[data-order-cost]");
+        if (costEl){
+          var cost = orderRowCost(it, qty>=1?qty:1);
+          costEl.textContent = cost!=null ? fmtMoney(cost) : "—";
+        }
       });
 
       inp.addEventListener("change", function(){
         var id = inp.dataset.orderId, field = inp.dataset.orderField;
         var it = state.items[id];
         if (!it) return;
+
+        if (field==="orderQty"){
+          var qty = parseInt(inp.value, 10);
+          state.orderQty[id] = (qty>=1) ? qty : 1;
+          renderReorderPanel();
+          return;
+        }
+
         var value = field==="orderUnitSize" ? (parseInt(inp.value,10) || 1) : inp.value;
         it[field] = value;
         commitField(id, field, value);
@@ -1495,17 +1545,19 @@
   function confirmReorder(toReorder){
     var date = todayStr();
     toReorder.forEach(function(it){
-      var sq = suggestedQty(it);
-      if (sq==null) return;
-      var packs = hasCustomOrderUnit(it) ? packsToOrder(it, sq) : null;
-      it.lastOrderQty = sq;
-      it.lastOrderPacks = packs;
-      it.lastOrderLabel = packs!=null ? it.orderUnitLabel : "";
+      var qty = getOrderQty(it.id);
+      var size = orderUnitSizeOf(it);
+      var label = orderUnitLabelOf(it);
+      it.lastOrderQty = qty*size;   // équivalent en unités individuelles (info)
+      it.lastOrderPacks = qty;      // la quantité réellement saisie/commandée
+      it.lastOrderLabel = label;
       it.lastOrderDate = date;
-      commitField(it.id, "lastOrderQty", sq);
-      commitField(it.id, "lastOrderPacks", packs);
-      commitField(it.id, "lastOrderLabel", it.lastOrderLabel);
+      commitField(it.id, "lastOrderQty", it.lastOrderQty);
+      commitField(it.id, "lastOrderPacks", qty);
+      commitField(it.id, "lastOrderLabel", label);
       commitField(it.id, "lastOrderDate", date);
+      // On repart à 1 pour la prochaine commande, une fois celle-ci confirmée.
+      delete state.orderQty[it.id];
     });
     renderReorderPanel();
   }
@@ -1528,11 +1580,10 @@
     var columns = [
       { header: t("xlsCategory"), key: "cat", width: 16 },
       { header: t("tableArticle"), key: "name", width: 32 },
-      { header: t("xlsSuggestedQty"), key: "sq", width: 16 },
       { header: t("orderUnitLabel"), key: "unit", width: 18 },
-      { header: t("xlsQtyToOrder"), key: "qty", width: 14 },
+      { header: t("xlsQtyToOrder"), key: "qty", width: 16 },
       { header: t("xlsEstimatedCost"), key: "cost", width: 14 },
-      { header: t("xlsLastOrderQty"), key: "lastQty", width: 18 },
+      { header: t("xlsLastOrderQty"), key: "lastQty", width: 20 },
       { header: t("xlsLastOrderDate"), key: "lastDate", width: 16 }
     ];
     sheet.columns = columns;
@@ -1562,21 +1613,18 @@
 
     var total = 0, totalKnown = false;
     toReorder.forEach(function(it, idx){
-      var sq = suggestedQty(it);
-      var custom = hasCustomOrderUnit(it);
-      var packs = custom ? packsToOrder(it, sq) : null;
-      var cost = (sq!=null && it.unitCost!=null) ? sq*it.unitCost : null;
+      var qty = getOrderQty(it.id);
+      var cost = orderRowCost(it, qty);
       if (cost!=null){ total += cost; totalKnown = true; }
 
       var row = sheet.getRow(headerRowIdx + 1 + idx);
       row.values = {
         cat: catLabel(it.category),
         name: itemDisplayName(it),
-        sq: sq!=null ? sq : null,
-        unit: custom ? it.orderUnitLabel : t("orderUnitDefault"),
-        qty: custom ? packs : (sq!=null ? sq : null),
+        unit: orderUnitLabelOf(it),
+        qty: qty,
         cost: cost,
-        lastQty: it.lastOrderQty!=null ? it.lastOrderQty : null,
+        lastQty: it.lastOrderPacks!=null ? (it.lastOrderPacks+" "+(it.lastOrderLabel||"")) : "",
         lastDate: it.lastOrderDate ? fmtDateLocal(it.lastOrderDate) : ""
       };
       row.getCell("cost").numFmt = '"$"#,##0.00';
@@ -1586,12 +1634,12 @@
     });
 
     var totalRowIdx = headerRowIdx + 1 + toReorder.length;
-    sheet.mergeCells(totalRowIdx, 1, totalRowIdx, 5);
+    sheet.mergeCells(totalRowIdx, 1, totalRowIdx, 4);
     var totalLabelCell = sheet.getCell(totalRowIdx, 1);
     totalLabelCell.value = t("xlsEstimatedCost")+" — "+t("xlsSheetTitle");
     totalLabelCell.font = { bold:true };
     totalLabelCell.alignment = { horizontal:"right" };
-    var totalValueCell = sheet.getCell(totalRowIdx, 6);
+    var totalValueCell = sheet.getCell(totalRowIdx, 5);
     totalValueCell.value = totalKnown ? total : null;
     totalValueCell.numFmt = '"$"#,##0.00';
     totalValueCell.font = { bold:true, color:{argb:BRAND_BLUE} };
