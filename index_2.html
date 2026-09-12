@@ -1,0 +1,2474 @@
+<title>Stock La Maternelle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@500;600&family=Nunito:wght@400;500;600;700;800&display=swap">
+<style>
+  /* La Maternelle French Academy — brand guide (LM_Brandguide_2025_V4):
+     Main colors: Ateneo Blue #003B71, Light Blue #73C2E6.
+     Secondary colors: Lynx White #F7F7F7, coral #F76C5E, golden yellow #FFCF57.
+     Header typeface: Mitr SemiBold. Body typeface: Nunito Medium.
+     Design language: round edges, soft forms, hand-drawn/vector warmth. */
+  :root{
+    --paper:#F7F7F7;
+    --paper-raised:#FFFFFF;
+    --paper-sunken:#EEF3F6;
+    --ink:#1F2A33;
+    --ink-soft:#5C6B76;
+    --border:#E1E6EA;
+    --border-strong:#C9D2D8;
+    --indigo:#003B71;
+    --indigo-strong:#00294F;
+    --indigo-soft:#E4EEF5;
+    --teal:#73C2E6;
+    --teal-soft:#EAF6FB;
+    --marigold:#F76C5E;
+    --marigold-strong:#E1503F;
+    --marigold-soft:#FDEAE8;
+    --gold:#FFCF57;
+    --gold-soft:#FFF6E0;
+    --good:#2F8F5B;
+    --good-soft:#E3F4EA;
+    --warn:#C07C12;
+    --warn-soft:#FBF0DC;
+    --critical:#C23B34;
+    --critical-soft:#FBE7E5;
+    --neutral-soft:#EDEFF1;
+    --shadow-s:0 1px 2px rgba(31,42,51,0.07);
+    --shadow-m:0 1px 2px rgba(31,42,51,0.06), 0 6px 18px rgba(31,42,51,0.08);
+    --radius-s:9px;
+    --radius-m:15px;
+    --radius-l:22px;
+    --font-display:'Mitr', 'Trebuchet MS', sans-serif;
+    --font-body:'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono:'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#12181D;
+      --paper-raised:#1B232A;
+      --paper-sunken:#0E1317;
+      --ink:#F3F6F8;
+      --ink-soft:#A9B4BC;
+      --border:#2A343C;
+      --border-strong:#3A454E;
+      --indigo:#8FC4E8;
+      --indigo-strong:#B7DEF2;
+      --indigo-soft:#1E3446;
+      --teal:#73C2E6;
+      --teal-soft:#16303D;
+      --marigold:#FF9186;
+      --marigold-strong:#FFAA9F;
+      --marigold-soft:#3A2320;
+      --gold:#FFD873;
+      --gold-soft:#3A2E10;
+      --good:#6BC492;
+      --good-soft:#17301F;
+      --warn:#E3A94A;
+      --warn-soft:#3A2C10;
+      --critical:#E58077;
+      --critical-soft:#3B211E;
+      --neutral-soft:#232A30;
+      --shadow-s:0 1px 2px rgba(0,0,0,0.35);
+      --shadow-m:0 1px 2px rgba(0,0,0,0.3), 0 8px 22px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#12181D;
+    --paper-raised:#1B232A;
+    --paper-sunken:#0E1317;
+    --ink:#F3F6F8;
+    --ink-soft:#A9B4BC;
+    --border:#2A343C;
+    --border-strong:#3A454E;
+    --indigo:#8FC4E8;
+    --indigo-strong:#B7DEF2;
+    --indigo-soft:#1E3446;
+    --teal:#73C2E6;
+    --teal-soft:#16303D;
+    --marigold:#FF9186;
+    --marigold-strong:#FFAA9F;
+    --marigold-soft:#3A2320;
+    --gold:#FFD873;
+    --gold-soft:#3A2E10;
+    --good:#6BC492;
+    --good-soft:#17301F;
+    --warn:#E3A94A;
+    --warn-soft:#3A2C10;
+    --critical:#E58077;
+    --critical-soft:#3B211E;
+    --neutral-soft:#232A30;
+    --shadow-s:0 1px 2px rgba(0,0,0,0.35);
+    --shadow-m:0 1px 2px rgba(0,0,0,0.3), 0 8px 22px rgba(0,0,0,0.4);
+  }
+
+  *{box-sizing:border-box;}
+  html{color-scheme:light dark;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-weight:500;
+    font-size:15px;
+    line-height:1.45;
+    padding:0 20px 64px;
+  }
+  .wrap{max-width:1180px;margin:0 auto;}
+  a{color:var(--indigo);}
+  h1,h2,h3{font-family:var(--font-display);font-weight:600;margin:0;text-wrap:balance;}
+  button{font-family:var(--font-body);}
+  input,select{font-family:var(--font-body);color:var(--ink);}
+  ::selection{background:var(--indigo-soft);}
+  :focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
+
+  /* ---------- header ---------- */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:28px 0 20px;flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:14px;}
+  .mark{
+    width:46px;height:46px;border-radius:var(--radius-m);flex:none;
+    background:linear-gradient(155deg, var(--indigo) 0%, var(--teal) 100%);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-display);font-weight:600;font-size:17px;letter-spacing:0.02em;
+    box-shadow:var(--shadow-s);
+  }
+  .brand-text h1{font-size:22px;}
+  .brand-text p{margin:2px 0 0;color:var(--ink-soft);font-size:13px;}
+  .sync{
+    display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-soft);
+    background:var(--paper-raised);border:1px solid var(--border);border-radius:999px;
+    padding:7px 13px;box-shadow:var(--shadow-s);
+  }
+  .sync .dot{width:8px;height:8px;border-radius:50%;background:var(--good);flex:none;}
+  .sync .dot.local{background:var(--warn);}
+  .lang-switch{
+    display:flex;gap:2px;background:var(--paper-raised);border:1px solid var(--border);
+    border-radius:999px;padding:3px;box-shadow:var(--shadow-s);
+  }
+  .lang-opt{
+    border:none;background:transparent;color:var(--ink-soft);cursor:pointer;
+    border-radius:999px;padding:5px 11px;font-size:12px;font-weight:700;letter-spacing:0.02em;
+  }
+  .lang-opt.selected{background:var(--indigo);color:#fff;}
+  .banner{
+    display:none;
+    background:var(--warn-soft);border:1px solid var(--warn);color:var(--ink);
+    border-radius:var(--radius-m);padding:11px 16px;font-size:13.5px;margin-bottom:18px;
+  }
+  .banner.show{display:block;}
+
+  /* ---------- KPI tiles ---------- */
+  .kpis{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:12px;margin-bottom:22px;
+  }
+  .kpi{
+    background:var(--paper-raised);border:1px solid var(--border);border-radius:var(--radius-l);
+    padding:16px 18px;box-shadow:var(--shadow-s);
+  }
+  .kpi .label{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.06em;}
+  .kpi .value{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:26px;font-weight:600;margin-top:6px;}
+  .kpi .sub{font-size:12.5px;color:var(--ink-soft);margin-top:3px;}
+  .kpi.accent-critical .value{color:var(--critical);}
+  .kpi.accent-indigo .value{color:var(--indigo);}
+
+  /* ---------- reorder panel ---------- */
+  .panel{
+    background:var(--paper-raised);border:1px solid var(--border);border-radius:var(--radius-l);
+    box-shadow:var(--shadow-m);margin-bottom:24px;overflow:hidden;
+  }
+  .panel-head{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    padding:16px 20px;border-bottom:1px solid var(--border);background:var(--critical-soft);
+  }
+  .panel-head.ok{background:var(--good-soft);}
+  .panel-head h2{font-size:17px;}
+  .panel-head .tag{font-size:12.5px;color:var(--ink-soft);font-family:var(--font-body);font-weight:400;}
+  .panel-total{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:600;font-size:16px;}
+  .panel-body{padding:6px 20px 16px;}
+  .order-row{
+    display:grid;grid-template-columns:1fr auto auto auto;gap:14px;align-items:center;
+    padding:10px 0;border-bottom:1px dashed var(--border);font-size:13.5px;
+  }
+  .order-row:last-child{border-bottom:none;}
+  .order-row .name{font-weight:500;}
+  .order-row .meta{color:var(--ink-soft);font-size:12.5px;}
+  .order-row .qty{font-family:var(--font-mono);text-align:right;white-space:nowrap;}
+  .order-row .cost{font-family:var(--font-mono);text-align:right;font-weight:600;white-space:nowrap;min-width:70px;}
+  .empty-good{padding:18px 4px;color:var(--good);font-size:14px;display:flex;gap:10px;align-items:center;}
+
+  /* ---------- toolbar ---------- */
+  .toolbar{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;
+  }
+  .search{
+    flex:1 1 220px;min-width:180px;
+    border:1px solid var(--border);background:var(--paper-raised);border-radius:999px;
+    padding:9px 16px;font-size:13.5px;color:var(--ink);
+  }
+  .search:focus-visible{border-color:var(--indigo);}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;}
+  .chip{
+    border:1px solid var(--border);background:var(--paper-raised);color:var(--ink-soft);
+    border-radius:999px;padding:8px 14px;font-size:13px;cursor:pointer;white-space:nowrap;
+  }
+  .chip.active{background:var(--indigo);border-color:var(--indigo);color:#fff;}
+  .btn{
+    border:none;background:var(--indigo);color:#fff;border-radius:999px;
+    padding:9px 18px;font-size:13.5px;font-weight:500;cursor:pointer;white-space:nowrap;
+    box-shadow:var(--shadow-s);
+  }
+  .btn:hover{background:var(--indigo-strong);}
+  .btn.ghost{background:transparent;color:var(--indigo);border:1px solid var(--indigo);}
+  .btn.accent{background:var(--marigold);}
+  .btn.accent:hover{background:var(--marigold-strong);}
+
+  /* ---------- category sections ---------- */
+  .category{margin-bottom:26px;}
+  .category-head{
+    display:flex;align-items:center;gap:9px;padding:2px 2px 10px;border-bottom:2px solid var(--cat-color, var(--indigo));
+    margin-bottom:2px;
+  }
+  .cat-dot{width:11px;height:11px;border-radius:50%;background:var(--cat-color, var(--indigo));flex:none;box-shadow:var(--shadow-s);}
+  .category-head h2{font-size:16px;letter-spacing:0.01em;}
+  .category-head .count{font-size:12.5px;color:var(--ink-soft);}
+  .table-scroll{overflow-x:auto;border-radius:var(--radius-m);}
+  table{width:100%;border-collapse:collapse;min-width:760px;}
+  thead th{
+    text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:0.05em;
+    color:var(--ink-soft);font-weight:600;padding:10px 10px;border-bottom:1px solid var(--border);
+    background:var(--paper-sunken);
+  }
+  thead th.num{text-align:right;}
+  tbody td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+  tbody tr:hover{background:var(--paper-sunken);}
+  .item-cell{display:flex;align-items:center;gap:12px;}
+  .photo-slot{
+    position:relative;width:64px;height:64px;flex:none;padding:0;cursor:pointer;
+  }
+  .item-thumb{
+    width:64px;height:64px;border-radius:12px;object-fit:cover;flex:none;
+    background:var(--paper-sunken);border:1px solid var(--border);display:block;
+  }
+  .item-thumb-fallback{
+    width:64px;height:64px;border-radius:12px;flex:none;
+    background:var(--paper-sunken);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;font-size:26px;
+    transition:background .12s;
+  }
+  .photo-slot:hover .item-thumb-fallback{background:var(--paper-sunken-2, var(--paper-sunken));border-color:var(--accent, var(--border));}
+  .photo-slot:hover .item-thumb{filter:brightness(.85);}
+  .photo-remove{
+    position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;
+    background:#c0392b;color:#fff;font-size:11px;line-height:20px;text-align:center;
+    border:none;cursor:pointer;padding:0;display:none;
+  }
+  .photo-slot:hover .photo-remove{display:block;}
+  .item-name{font-weight:500;}
+  .item-pack{font-size:12px;color:var(--ink-soft);}
+  .item-note{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:1px;}
+  .cell-num{text-align:right;}
+  .num-input{
+    width:60px;text-align:center;border:1.5px solid transparent;border-radius:var(--radius-s);
+    background:var(--paper-sunken);font-family:var(--font-mono);font-weight:700;font-variant-numeric:tabular-nums;
+    padding:6px 4px;color:var(--ink);
+  }
+  .num-input.cost{width:72px;}
+  .num-input:focus-visible{outline:none;border-color:var(--indigo);background:var(--paper-raised);}
+  .num-input.has-value{background:var(--paper-raised);border-color:var(--border);}
+  .num-input::placeholder{color:var(--ink-soft);opacity:0.6;font-weight:500;}
+  .value-cell{font-family:var(--font-mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;}
+  .value-cell.muted{color:var(--ink-soft);}
+  .pill{
+    display:inline-block;padding:4px 11px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap;
+  }
+  .pill.good{background:var(--good-soft);color:var(--good);}
+  .pill.warn{background:var(--warn-soft);color:var(--warn);}
+  .pill.critical{background:var(--critical-soft);color:var(--critical);}
+  .pill.neutral{background:var(--neutral-soft);color:var(--ink-soft);}
+  .del-btn{
+    border:none;background:transparent;color:var(--ink-soft);cursor:pointer;font-size:15px;
+    padding:4px 6px;border-radius:6px;line-height:1;
+  }
+  .del-btn:hover{background:var(--critical-soft);color:var(--critical);}
+  .row-actions{display:flex;align-items:center;gap:2px;white-space:nowrap;}
+  .dist-btn, .hist-btn{
+    border:none;background:transparent;color:var(--ink-soft);cursor:pointer;font-size:15px;
+    padding:4px 6px;border-radius:6px;line-height:1;
+  }
+  .dist-btn:hover{background:var(--indigo-soft);color:var(--indigo);}
+  .hist-btn:hover{background:var(--teal-soft);color:var(--indigo);}
+  .num-input.nudge{border-color:var(--critical);background:var(--critical-soft);}
+
+  /* ---------- period toggle (matin / après-midi) ---------- */
+  .period-toggle{display:flex;gap:8px;}
+  .period-opt{
+    flex:1;border:1.5px solid var(--border);background:var(--paper);color:var(--ink-soft);
+    border-radius:var(--radius-s);padding:9px 10px;font-size:13.5px;font-weight:600;cursor:pointer;text-align:center;
+  }
+  .period-opt.selected{border-color:var(--indigo);background:var(--indigo-soft);color:var(--indigo);}
+
+  /* ---------- history modal ---------- */
+  .history-list{max-height:340px;overflow-y:auto;border-top:1px solid var(--border);padding-top:4px;}
+  .history-entry{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:10px 2px;border-bottom:1px dashed var(--border);font-size:13.5px;
+  }
+  .history-entry:last-child{border-bottom:none;}
+  .history-entry .h-date{font-weight:600;}
+  .history-entry .h-by{color:var(--ink-soft);font-size:12.5px;}
+  .history-entry .h-qty{font-family:var(--font-mono);font-weight:700;color:var(--critical);white-space:nowrap;}
+  .badge-period{
+    display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;
+    background:var(--gold-soft);color:var(--warn);margin-left:8px;
+  }
+  .badge-period.pm{background:var(--teal-soft);color:var(--indigo);}
+
+  /* ---------- stats & planning modal ---------- */
+  .stats-modal{max-width:900px;}
+  .stats-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .stats-tab{
+    border:1.5px solid var(--border);background:var(--paper);color:var(--ink-soft);
+    border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;cursor:pointer;
+  }
+  .stats-tab.selected{border-color:var(--indigo);background:var(--indigo-soft);color:var(--indigo);}
+  .stats-empty{color:var(--ink-soft);font-size:13.5px;padding:16px 2px;}
+
+  .week-nav{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+  .week-label{font-weight:700;font-size:14px;}
+
+  .agenda-scroll{overflow-x:auto;border-radius:var(--radius-m);}
+  .agenda-grid{
+    display:grid;grid-template-columns:88px repeat(7, minmax(126px,1fr));gap:1px;
+    background:var(--border);border:1px solid var(--border);border-radius:var(--radius-m);
+    overflow:hidden;min-width:800px;
+  }
+  .agenda-cell{background:var(--paper-raised);padding:8px;min-height:60px;}
+  .agenda-cell.head{background:var(--paper-sunken);text-align:center;padding:10px 6px;min-height:auto;}
+  .agenda-cell.head .d-name{font-weight:700;font-size:12.5px;}
+  .agenda-cell.head .d-date{font-size:11px;color:var(--ink-soft);margin-top:1px;}
+  .agenda-cell.head.today{background:var(--indigo-soft);}
+  .agenda-cell.head.today .d-name{color:var(--indigo);}
+  .agenda-cell.label{
+    background:var(--paper-sunken);display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:700;color:var(--ink-soft);text-align:center;padding:8px 4px;min-height:auto;
+  }
+  .agenda-item-line{font-size:11.5px;line-height:1.55;}
+  .agenda-item-line .qty{font-family:var(--font-mono);font-weight:700;color:var(--indigo);}
+  .agenda-item-line.warn .qty{color:var(--critical);}
+  .agenda-empty-cell{color:var(--border-strong);font-size:11px;text-align:center;padding-top:8px;}
+
+  .plan-alerts{margin-bottom:14px;}
+  .plan-alert{
+    display:flex;align-items:flex-start;gap:8px;background:var(--critical-soft);color:var(--critical);
+    border-radius:var(--radius-s);padding:9px 12px;font-size:13px;margin-bottom:6px;
+  }
+  .plan-ok{
+    display:flex;align-items:center;gap:8px;background:var(--good-soft);color:var(--good);
+    border-radius:var(--radius-s);padding:9px 12px;font-size:13px;margin-bottom:6px;
+  }
+
+  @media (max-width:560px){
+    .agenda-grid{grid-template-columns:76px repeat(7, minmax(110px,1fr));}
+  }
+
+  /* ---------- add-item form ---------- */
+  .add-form{
+    display:none;background:var(--paper-raised);border:1px solid var(--border);border-radius:var(--radius-l);
+    box-shadow:var(--shadow-m);padding:18px 20px;margin-bottom:22px;
+  }
+  .add-form.show{display:block;}
+  .add-form h2{font-size:16px;margin-bottom:14px;}
+  .add-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-bottom:14px;}
+  .add-grid label{display:block;font-size:12px;color:var(--ink-soft);margin-bottom:5px;}
+  .add-grid input, .add-grid select{
+    width:100%;border:1px solid var(--border);border-radius:var(--radius-s);padding:8px 10px;font-size:13.5px;background:var(--paper);color:var(--ink);
+  }
+  .add-actions{display:flex;gap:10px;}
+
+  footer{
+    margin-top:34px;padding-top:18px;border-top:1px solid var(--border);
+    color:var(--ink-soft);font-size:12px;
+  }
+
+  /* ---------- receive-stock modal ---------- */
+  .modal-overlay{
+    display:none;position:fixed;inset:0;background:rgba(20,17,13,0.45);
+    align-items:flex-start;justify-content:center;padding:6vh 16px;z-index:50;overflow-y:auto;
+  }
+  .modal-overlay.show{display:flex;}
+  .modal{
+    background:var(--paper-raised);border:1px solid var(--border);border-radius:var(--radius-l);
+    box-shadow:var(--shadow-m);width:100%;max-width:620px;padding:22px 24px 20px;
+  }
+  .modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px;}
+  .modal-head h2{font-size:19px;}
+  .modal-close{
+    border:none;background:transparent;color:var(--ink-soft);cursor:pointer;font-size:18px;
+    padding:2px 6px;border-radius:6px;line-height:1;flex:none;
+  }
+  .modal-close:hover{background:var(--paper-sunken);}
+  .modal-sub{color:var(--ink-soft);font-size:13px;margin:2px 0 18px;}
+  .modal-date{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .modal-date label{font-size:12.5px;color:var(--ink-soft);white-space:nowrap;}
+  .modal-date input{
+    border:1px solid var(--border);border-radius:var(--radius-s);padding:7px 10px;font-size:13.5px;
+    background:var(--paper);color:var(--ink);font-family:var(--font-mono);
+  }
+  .receive-row{display:grid;grid-template-columns:2fr 100px auto;gap:10px;align-items:end;margin-bottom:16px;}
+  .receive-row label{display:block;font-size:12px;color:var(--ink-soft);margin-bottom:5px;}
+  .receive-row select, .receive-row input{
+    width:100%;border:1px solid var(--border);border-radius:var(--radius-s);padding:8px 10px;
+    font-size:13.5px;background:var(--paper);color:var(--ink);
+  }
+  .receive-row input{font-family:var(--font-mono);}
+  .receive-list{border-top:1px solid var(--border);padding-top:6px;max-height:220px;overflow-y:auto;}
+  .receive-entry{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:9px 2px;border-bottom:1px dashed var(--border);font-size:13.5px;
+  }
+  .receive-entry:last-child{border-bottom:none;}
+  .receive-entry .re-name{font-weight:500;}
+  .receive-entry .re-meta{color:var(--good);font-family:var(--font-mono);font-size:12.5px;}
+  .receive-undo{
+    border:none;background:transparent;color:var(--ink-soft);cursor:pointer;font-size:12px;
+    text-decoration:underline;padding:2px 4px;flex:none;
+  }
+  .receive-undo:hover{color:var(--critical);}
+  .receive-empty{color:var(--ink-soft);font-size:13px;padding:10px 2px;}
+  .modal-foot{display:flex;justify-content:flex-end;margin-top:16px;}
+
+  @media (max-width:560px){
+    .add-grid{grid-template-columns:1fr;}
+    .receive-row{grid-template-columns:1fr;}
+    .topbar{padding-top:20px;}
+    .brand-text h1{font-size:19px;}
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="mark">LM</div>
+      <div class="brand-text">
+        <h1 id="appTitle">Gestion du stock</h1>
+        <p id="appSubtitle">La Maternelle French Academy &middot; École bilingue français&ndash;anglais, Houston</p>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-opt" data-lang="fr">FR</button>
+        <button type="button" class="lang-opt" data-lang="en">EN</button>
+        <button type="button" class="lang-opt" data-lang="es">ES</button>
+      </div>
+      <div class="sync" id="syncIndicator">
+        <span class="dot" id="syncDot"></span>
+        <span id="syncLabel">Connexion…</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="banner" id="offlineBanner">
+    <span id="offlineBannerText">Mode local : la base de données partagée n'est pas disponible dans cette vue. Vos modifications resteront visibles ici mais ne seront pas enregistrées pour les autres personnes.</span>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="panel" id="reorderPanel"></div>
+
+  <div class="add-form" id="addForm">
+    <h2 id="addFormTitle">Ajouter un article</h2>
+    <div class="add-grid">
+      <div>
+        <label for="newName" id="newNameLabel">Nom de l'article</label>
+        <input type="text" id="newName" placeholder="ex. Craquelins Ritz">
+      </div>
+      <div>
+        <label for="newPack" id="newPackLabel">Conditionnement</label>
+        <input type="text" id="newPack" placeholder="ex. 18 sachets">
+      </div>
+      <div>
+        <label for="newCategory" id="newCategoryLabel">Catégorie</label>
+        <select id="newCategory"></select>
+      </div>
+    </div>
+    <div class="add-actions">
+      <button class="btn" id="confirmAdd">Ajouter</button>
+      <button class="btn ghost" id="cancelAdd">Annuler</button>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <input type="text" class="search" id="searchInput" placeholder="Rechercher un article…">
+    <div class="chips" id="filterChips"></div>
+    <button class="btn accent" id="showReceiveModal">📥 Réceptionner du stock</button>
+    <button class="btn ghost" id="showStatsModal">📊 Statistiques</button>
+    <button class="btn ghost" id="showAddForm">+ Ajouter un article</button>
+  </div>
+
+  <div id="categories"></div>
+
+  <div class="modal-overlay" id="receiveOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="receiveTitle">
+      <div class="modal-head">
+        <h2 id="receiveTitle">Réception de stock</h2>
+        <button type="button" class="modal-close" id="receiveCloseX" aria-label="Fermer">✕</button>
+      </div>
+      <p class="modal-sub" id="receiveSub">Indiquez le produit reçu, la quantité et la date&nbsp;: le stock actuel de chaque article est mis à jour automatiquement.</p>
+
+      <div class="modal-date">
+        <label for="receiveDate" id="receiveDateLabel">Date de réception</label>
+        <input type="date" id="receiveDate">
+      </div>
+
+      <div class="receive-row">
+        <div>
+          <label for="receiveProduct" id="receiveProductLabel">Produit</label>
+          <select id="receiveProduct"></select>
+        </div>
+        <div>
+          <label for="receiveQty" id="receiveQtyLabel">Quantité reçue</label>
+          <input type="number" id="receiveQty" min="1" step="1" placeholder="ex. 4">
+        </div>
+        <button class="btn" id="receiveAddBtn" type="button">Ajouter</button>
+      </div>
+
+      <div class="receive-list" id="receiveList"></div>
+
+      <div class="modal-foot">
+        <button class="btn ghost" id="receiveCloseBtn" type="button">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="distributeOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="distributeTitle">
+      <div class="modal-head">
+        <h2 id="distributeTitle">Distribuer un article</h2>
+        <button type="button" class="modal-close" id="distributeCloseX" aria-label="Fermer">✕</button>
+      </div>
+      <p class="modal-sub" id="distributeSub">&nbsp;</p>
+
+      <div class="modal-date">
+        <label for="distributeDate" id="distributeDateLabel">Date</label>
+        <input type="date" id="distributeDate">
+      </div>
+
+      <div class="add-grid" style="grid-template-columns:1fr 1fr;">
+        <div>
+          <label for="distributeQty" id="distributeQtyLabel" style="display:block;font-size:12px;color:var(--ink-soft);margin-bottom:5px;">Quantité distribuée</label>
+          <input type="number" id="distributeQty" min="1" step="1" placeholder="ex. 10">
+        </div>
+        <div>
+          <label id="distributeMomentLabel" style="display:block;font-size:12px;color:var(--ink-soft);margin-bottom:5px;">Moment</label>
+          <div class="period-toggle" id="distributePeriodToggle">
+            <button type="button" class="period-opt" data-period="matin">🌅 Matin</button>
+            <button type="button" class="period-opt" data-period="apres-midi">🌇 Après-midi</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label for="distributeBy" id="distributeByLabel" style="display:block;font-size:12px;color:var(--ink-soft);margin-bottom:5px;">Distribué par</label>
+        <input type="text" id="distributeBy" list="distributeByList" placeholder="ex. Sophie">
+        <datalist id="distributeByList"></datalist>
+      </div>
+
+      <div class="modal-foot">
+        <button class="btn ghost" id="distributeCancelBtn" type="button">Annuler</button>
+        <button class="btn" id="distributeConfirmBtn" type="button" style="margin-left:10px;">Confirmer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="historyOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="historyTitle">
+      <div class="modal-head">
+        <h2 id="historyTitle">Historique</h2>
+        <button type="button" class="modal-close" id="historyCloseX" aria-label="Fermer">✕</button>
+      </div>
+      <p class="modal-sub" id="historySub">&nbsp;</p>
+      <div class="history-list" id="historyList"></div>
+      <div class="modal-foot">
+        <button class="btn ghost" id="historyCloseBtn" type="button">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="statsOverlay">
+    <div class="modal stats-modal" role="dialog" aria-modal="true" aria-labelledby="statsTitle">
+      <div class="modal-head">
+        <h2 id="statsTitle">Statistiques &amp; planning</h2>
+        <button type="button" class="modal-close" id="statsCloseX" aria-label="Fermer">✕</button>
+      </div>
+
+      <div class="stats-tabs" id="statsTabs">
+        <button type="button" class="stats-tab selected" data-tab="agenda">📅 Agenda de la semaine</button>
+        <button type="button" class="stats-tab" data-tab="plan">🔮 Plan semaine prochaine</button>
+      </div>
+
+      <div id="agendaPane">
+        <div class="week-nav">
+          <button type="button" class="btn ghost" id="agendaPrevWeek">◀</button>
+          <span class="week-label" id="agendaWeekLabel">—</span>
+          <button type="button" class="btn ghost" id="agendaNextWeek">▶</button>
+          <button type="button" class="btn ghost" id="agendaThisWeek" style="margin-left:auto;">Cette semaine</button>
+        </div>
+        <div class="stats-empty" id="agendaMessage" style="display:none;"></div>
+        <div class="agenda-scroll" id="agendaScroll"><div class="agenda-grid" id="agendaGrid"></div></div>
+      </div>
+
+      <div id="planPane" style="display:none;">
+        <p class="modal-sub" id="planIntro">Basé sur la moyenne des sorties des 4 dernières semaines, appliquée au stock actuel — une estimation, pas une garantie.</p>
+        <div class="plan-alerts" id="planAlerts"></div>
+        <div class="week-nav"><span class="week-label" id="planWeekLabel">—</span></div>
+        <div class="stats-empty" id="planMessage" style="display:none;"></div>
+        <div class="agenda-scroll" id="planScroll"><div class="agenda-grid" id="planGrid"></div></div>
+      </div>
+
+      <div class="modal-foot">
+        <button class="btn ghost" id="statsCloseBtn" type="button">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <footer id="footerNote">
+    Stock actuel, seuil de réapprovisionnement et coût unitaire sont à renseigner par votre équipe — ils déterminent le statut de chaque article et la liste de commande ci-dessus. « Stock cible » est facultatif&nbsp;: laissé vide, il vaut deux fois le seuil.
+  </footer>
+
+  <input type="file" id="photoFileInput" accept="image/*" style="display:none">
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- i18n ---------------- */
+
+  var I18N = {
+    fr: {
+      appTitle:"Gestion du stock",
+      appSubtitle:"La Maternelle French Academy · École bilingue français–anglais, Houston",
+      syncConnecting:"Connexion…",
+      syncLive:"Synchronisé",
+      syncLocal:"Mode local",
+      offlineBanner:"Mode local : la base de données partagée n'est pas disponible dans cette vue. Vos modifications resteront visibles ici mais ne seront pas enregistrées pour les autres personnes.",
+      cat_collations:"Collations",
+      cat_mensuel:"Mensuel",
+      cat_occasionnel:"Occasionnel",
+      chipAll:"Toutes",
+      kpiTotalValue:"Valeur totale du stock",
+      kpiToReorder:"À commander maintenant",
+      kpiOrderCost:"Coût estimé de la commande",
+      kpiOrderCostSub:"pour remonter au niveau cible",
+      kpiUnset:"Non renseignés",
+      kpiUnsetSub:"stock jamais compté",
+      reorderTitle:"Bon de commande",
+      reorderNothingTag:"rien à commander pour l'instant",
+      reorderAllGood:"✓ Tous les articles suivis sont au-dessus de leur seuil de réapprovisionnement.",
+      reorderDefineThreshold:"définir un seuil",
+      reorderOrderQty:"commander {n}",
+      reorderPriceUnknown:"prix ?",
+      reorderPerUnit:"/u",
+      tableArticle:"Article",
+      tableCurrent:"Stock actuel",
+      tableThreshold:"Seuil",
+      tableTarget:"Stock cible",
+      tableUnitCost:"Coût unitaire",
+      tableValue:"Valeur",
+      tableStatus:"Statut",
+      tableTracking:"Suivi",
+      tableCategoryEmpty:"Aucun article dans cette catégorie pour l'instant.",
+      tableGlobalEmpty:"Aucun article ne correspond à votre recherche.",
+      statusUnset:"Non renseigné",
+      statusNoThreshold:"Seuil à définir",
+      statusOut:"Épuisé",
+      statusToOrder:"À commander",
+      statusLow:"Stock bas",
+      statusOk:"OK",
+      distributeAction:"Enregistrer une distribution",
+      distributeAria:"Distribuer",
+      historyAction:"Historique des sorties",
+      historyAria:"Historique de",
+      deleteAction:"Supprimer",
+      deleteConfirm:"Supprimer \"{name}\" de la liste ?",
+      photoUploadHint:"Cliquer pour ajouter une photo",
+      photoRemove:"Retirer la photo",
+      addFormTitle:"Ajouter un article",
+      newNameLabel:"Nom de l'article",
+      newNamePlaceholder:"ex. Craquelins Ritz",
+      newPackLabel:"Conditionnement",
+      newPackPlaceholder:"ex. 18 sachets",
+      newCategoryLabel:"Catégorie",
+      confirmAdd:"Ajouter",
+      cancelAdd:"Annuler",
+      searchPlaceholder:"Rechercher un article…",
+      showReceiveModal:"📥 Réceptionner du stock",
+      showStatsModal:"📊 Statistiques",
+      showAddForm:"+ Ajouter un article",
+      receiveTitle:"Réception de stock",
+      receiveSub:"Indiquez le produit reçu, la quantité et la date : le stock actuel de chaque article est mis à jour automatiquement.",
+      receiveDateLabel:"Date de réception",
+      receiveProductLabel:"Produit",
+      receiveProductPlaceholder:"Choisir un produit…",
+      receiveQtyLabel:"Quantité reçue",
+      receiveQtyPlaceholder:"ex. 4",
+      receiveAdd:"Ajouter",
+      receiveEmpty:"Rien d'enregistré pour l'instant dans cette réception.",
+      receiveUndo:"annuler",
+      receiveClose:"Fermer",
+      distributeTitlePrefix:"Distribuer — ",
+      distributeCurrentStock:"Stock actuel : ",
+      distributeDateLabel:"Date",
+      distributeQtyLabel:"Quantité distribuée",
+      distributeQtyPlaceholder:"ex. 10",
+      distributeMomentLabel:"Moment",
+      periodMorning:"Matin",
+      periodAfternoon:"Après-midi",
+      distributeByLabel:"Distribué par",
+      distributeByPlaceholder:"ex. Sophie",
+      distributeCancel:"Annuler",
+      closeAria:"Fermer",
+      distributeConfirm:"Confirmer",
+      historyTitlePrefix:"Historique — ",
+      historySub:"Sorties de stock enregistrées pour cet article, les plus récentes d'abord.",
+      historyLoading:"Chargement…",
+      historyLocalUnavailable:"Historique indisponible en mode local (base de données non connectée).",
+      historyEmpty:"Aucune sortie enregistrée pour cet article pour l'instant.",
+      historyError:"Impossible de charger l'historique pour le moment.",
+      historyUnknownBy:"Non renseigné",
+      historyClose:"Fermer",
+      statsTitle:"Statistiques & planning",
+      statsTabAgenda:"📅 Agenda de la semaine",
+      statsTabPlan:"🔮 Plan semaine prochaine",
+      statsThisWeek:"Cette semaine",
+      statsAgendaUnavailable:"Agenda indisponible en mode local (base de données non connectée).",
+      statsAgendaError:"Impossible de charger l'agenda pour le moment.",
+      planIntro:"Basé sur la moyenne des sorties des dernières semaines, appliquée au stock actuel — une estimation, pas une garantie.",
+      planUnavailable:"Plan indisponible en mode local (base de données non connectée).",
+      planError:"Impossible de calculer le plan pour le moment.",
+      planEmpty:"Pas encore assez d'historique de distribution pour établir un plan — revenez après quelques semaines d'utilisation de l'outil.",
+      planOk:"✓ Le stock actuel devrait couvrir les sorties prévues la semaine prochaine, pour tous les articles suivis.",
+      planAlertText:"{name} — stock actuel ({qty}) insuffisant pour couvrir les sorties prévues ; rupture estimée dès {day} {period}.",
+      statsClose:"Fermer",
+      weekOf:"Semaine du {left} au {right}",
+      unknownArticle:"(article)",
+      footer:"Stock actuel, seuil de réapprovisionnement et coût unitaire sont à renseigner par votre équipe — ils déterminent le statut de chaque article et la liste de commande ci-dessus. « Stock cible » est facultatif : laissé vide, il vaut deux fois le seuil.",
+      days:["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"],
+      months:["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"]
+    },
+    en: {
+      appTitle:"Stock Management",
+      appSubtitle:"La Maternelle French Academy · Bilingual French–English school, Houston",
+      syncConnecting:"Connecting…",
+      syncLive:"Synced",
+      syncLocal:"Local mode",
+      offlineBanner:"Local mode: the shared database isn't available in this view. Your changes will stay visible here but won't be saved for other people.",
+      cat_collations:"Snacks",
+      cat_mensuel:"Monthly",
+      cat_occasionnel:"Occasional",
+      chipAll:"All",
+      kpiTotalValue:"Total stock value",
+      kpiToReorder:"To reorder now",
+      kpiOrderCost:"Estimated order cost",
+      kpiOrderCostSub:"to get back to target level",
+      kpiUnset:"Not yet entered",
+      kpiUnsetSub:"stock never counted",
+      reorderTitle:"Order list",
+      reorderNothingTag:"nothing to order right now",
+      reorderAllGood:"✓ All tracked items are above their reorder threshold.",
+      reorderDefineThreshold:"set a threshold",
+      reorderOrderQty:"order {n}",
+      reorderPriceUnknown:"price ?",
+      reorderPerUnit:"/unit",
+      tableArticle:"Item",
+      tableCurrent:"Current stock",
+      tableThreshold:"Threshold",
+      tableTarget:"Target stock",
+      tableUnitCost:"Unit cost",
+      tableValue:"Value",
+      tableStatus:"Status",
+      tableTracking:"Track",
+      tableCategoryEmpty:"No items in this category yet.",
+      tableGlobalEmpty:"No items match your search.",
+      statusUnset:"Not entered",
+      statusNoThreshold:"Set a threshold",
+      statusOut:"Out of stock",
+      statusToOrder:"To order",
+      statusLow:"Low stock",
+      statusOk:"OK",
+      distributeAction:"Log a distribution",
+      distributeAria:"Distribute",
+      historyAction:"Distribution history",
+      historyAria:"History for",
+      deleteAction:"Delete",
+      deleteConfirm:"Delete \"{name}\" from the list?",
+      photoUploadHint:"Click to add a photo",
+      photoRemove:"Remove photo",
+      addFormTitle:"Add an item",
+      newNameLabel:"Item name",
+      newNamePlaceholder:"e.g. Ritz Crackers",
+      newPackLabel:"Packaging",
+      newPackPlaceholder:"e.g. 18 packs",
+      newCategoryLabel:"Category",
+      confirmAdd:"Add",
+      cancelAdd:"Cancel",
+      searchPlaceholder:"Search for an item…",
+      showReceiveModal:"📥 Receive stock",
+      showStatsModal:"📊 Statistics",
+      showAddForm:"+ Add an item",
+      receiveTitle:"Receiving stock",
+      receiveSub:"Enter the product received, the quantity and the date: the current stock of each item is updated automatically.",
+      receiveDateLabel:"Date received",
+      receiveProductLabel:"Product",
+      receiveProductPlaceholder:"Choose a product…",
+      receiveQtyLabel:"Quantity received",
+      receiveQtyPlaceholder:"e.g. 4",
+      receiveAdd:"Add",
+      receiveEmpty:"Nothing logged yet for this delivery.",
+      receiveUndo:"undo",
+      receiveClose:"Close",
+      distributeTitlePrefix:"Distribute — ",
+      distributeCurrentStock:"Current stock: ",
+      distributeDateLabel:"Date",
+      distributeQtyLabel:"Quantity distributed",
+      distributeQtyPlaceholder:"e.g. 10",
+      distributeMomentLabel:"Time of day",
+      periodMorning:"Morning",
+      periodAfternoon:"Afternoon",
+      distributeByLabel:"Distributed by",
+      distributeByPlaceholder:"e.g. Sophie",
+      distributeCancel:"Cancel",
+      closeAria:"Close",
+      distributeConfirm:"Confirm",
+      historyTitlePrefix:"History — ",
+      historySub:"Distributions logged for this item, most recent first.",
+      historyLoading:"Loading…",
+      historyLocalUnavailable:"History unavailable in local mode (database not connected).",
+      historyEmpty:"No distributions logged for this item yet.",
+      historyError:"Couldn't load the history right now.",
+      historyUnknownBy:"Not specified",
+      historyClose:"Close",
+      statsTitle:"Statistics & planning",
+      statsTabAgenda:"📅 Weekly agenda",
+      statsTabPlan:"🔮 Next week's plan",
+      statsThisWeek:"This week",
+      statsAgendaUnavailable:"Agenda unavailable in local mode (database not connected).",
+      statsAgendaError:"Couldn't load the agenda right now.",
+      planIntro:"Based on the average distributions of recent weeks, applied to current stock — an estimate, not a guarantee.",
+      planUnavailable:"Plan unavailable in local mode (database not connected).",
+      planError:"Couldn't calculate the plan right now.",
+      planEmpty:"Not enough distribution history yet to build a plan — check back after a few weeks of using the tool.",
+      planOk:"✓ Current stock should cover next week's expected distributions, for every tracked item.",
+      planAlertText:"{name} — current stock ({qty}) won't cover expected distributions; estimated shortfall from {day} {period}.",
+      statsClose:"Close",
+      weekOf:"Week of {left} to {right}",
+      unknownArticle:"(item)",
+      footer:"Current stock, reorder threshold and unit cost are entered by your team — they determine each item's status and the order list above. \"Target stock\" is optional: left blank, it defaults to twice the threshold.",
+      days:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+      months:["January","February","March","April","May","June","July","August","September","October","November","December"]
+    },
+    es: {
+      appTitle:"Gestión de inventario",
+      appSubtitle:"La Maternelle French Academy · Escuela bilingüe francés–inglés, Houston",
+      syncConnecting:"Conectando…",
+      syncLive:"Sincronizado",
+      syncLocal:"Modo local",
+      offlineBanner:"Modo local: la base de datos compartida no está disponible en esta vista. Sus cambios seguirán visibles aquí, pero no se guardarán para las demás personas.",
+      cat_collations:"Meriendas",
+      cat_mensuel:"Mensual",
+      cat_occasionnel:"Ocasional",
+      chipAll:"Todas",
+      kpiTotalValue:"Valor total del inventario",
+      kpiToReorder:"Por pedir ahora",
+      kpiOrderCost:"Costo estimado del pedido",
+      kpiOrderCostSub:"para volver al nivel objetivo",
+      kpiUnset:"Sin registrar",
+      kpiUnsetSub:"inventario nunca contado",
+      reorderTitle:"Orden de compra",
+      reorderNothingTag:"nada que pedir por ahora",
+      reorderAllGood:"✓ Todos los artículos monitoreados están por encima de su umbral de reposición.",
+      reorderDefineThreshold:"definir un umbral",
+      reorderOrderQty:"pedir {n}",
+      reorderPriceUnknown:"¿precio?",
+      reorderPerUnit:"/u",
+      tableArticle:"Artículo",
+      tableCurrent:"Inventario actual",
+      tableThreshold:"Umbral",
+      tableTarget:"Inventario objetivo",
+      tableUnitCost:"Costo unitario",
+      tableValue:"Valor",
+      tableStatus:"Estado",
+      tableTracking:"Seguimiento",
+      tableCategoryEmpty:"Ningún artículo en esta categoría por el momento.",
+      tableGlobalEmpty:"Ningún artículo coincide con su búsqueda.",
+      statusUnset:"Sin registrar",
+      statusNoThreshold:"Definir un umbral",
+      statusOut:"Agotado",
+      statusToOrder:"Por pedir",
+      statusLow:"Inventario bajo",
+      statusOk:"OK",
+      distributeAction:"Registrar una distribución",
+      distributeAria:"Distribuir",
+      historyAction:"Historial de salidas",
+      historyAria:"Historial de",
+      deleteAction:"Eliminar",
+      deleteConfirm:"¿Eliminar \"{name}\" de la lista?",
+      photoUploadHint:"Haga clic para agregar una foto",
+      photoRemove:"Quitar la foto",
+      addFormTitle:"Agregar un artículo",
+      newNameLabel:"Nombre del artículo",
+      newNamePlaceholder:"ej. Galletas Ritz",
+      newPackLabel:"Presentación",
+      newPackPlaceholder:"ej. 18 paquetes",
+      newCategoryLabel:"Categoría",
+      confirmAdd:"Agregar",
+      cancelAdd:"Cancelar",
+      searchPlaceholder:"Buscar un artículo…",
+      showReceiveModal:"📥 Recibir inventario",
+      showStatsModal:"📊 Estadísticas",
+      showAddForm:"+ Agregar un artículo",
+      receiveTitle:"Recepción de inventario",
+      receiveSub:"Indique el producto recibido, la cantidad y la fecha: el inventario actual de cada artículo se actualiza automáticamente.",
+      receiveDateLabel:"Fecha de recepción",
+      receiveProductLabel:"Producto",
+      receiveProductPlaceholder:"Elegir un producto…",
+      receiveQtyLabel:"Cantidad recibida",
+      receiveQtyPlaceholder:"ej. 4",
+      receiveAdd:"Agregar",
+      receiveEmpty:"Nada registrado todavía en esta recepción.",
+      receiveUndo:"deshacer",
+      receiveClose:"Cerrar",
+      distributeTitlePrefix:"Distribuir — ",
+      distributeCurrentStock:"Inventario actual: ",
+      distributeDateLabel:"Fecha",
+      distributeQtyLabel:"Cantidad distribuida",
+      distributeQtyPlaceholder:"ej. 10",
+      distributeMomentLabel:"Momento",
+      periodMorning:"Mañana",
+      periodAfternoon:"Tarde",
+      distributeByLabel:"Distribuido por",
+      distributeByPlaceholder:"ej. Sophie",
+      distributeCancel:"Cancelar",
+      closeAria:"Cerrar",
+      distributeConfirm:"Confirmar",
+      historyTitlePrefix:"Historial — ",
+      historySub:"Salidas de inventario registradas para este artículo, las más recientes primero.",
+      historyLoading:"Cargando…",
+      historyLocalUnavailable:"Historial no disponible en modo local (base de datos no conectada).",
+      historyEmpty:"Ninguna salida registrada todavía para este artículo.",
+      historyError:"No se pudo cargar el historial en este momento.",
+      historyUnknownBy:"Sin registrar",
+      historyClose:"Cerrar",
+      statsTitle:"Estadísticas y planificación",
+      statsTabAgenda:"📅 Agenda semanal",
+      statsTabPlan:"🔮 Plan de la próxima semana",
+      statsThisWeek:"Esta semana",
+      statsAgendaUnavailable:"Agenda no disponible en modo local (base de datos no conectada).",
+      statsAgendaError:"No se pudo cargar la agenda en este momento.",
+      planIntro:"Basado en el promedio de salidas de las últimas semanas, aplicado al inventario actual — una estimación, no una garantía.",
+      planUnavailable:"Plan no disponible en modo local (base de datos no conectada).",
+      planError:"No se pudo calcular el plan en este momento.",
+      planEmpty:"Todavía no hay suficiente historial de distribución para elaborar un plan — vuelva después de algunas semanas de uso de la herramienta.",
+      planOk:"✓ El inventario actual debería cubrir las salidas previstas para la próxima semana, para todos los artículos monitoreados.",
+      planAlertText:"{name} — el inventario actual ({qty}) es insuficiente para cubrir las salidas previstas; desabasto estimado a partir de {day} {period}.",
+      statsClose:"Cerrar",
+      weekOf:"Semana del {left} al {right}",
+      unknownArticle:"(artículo)",
+      footer:"El inventario actual, el umbral de reposición y el costo unitario deben ser completados por su equipo — determinan el estado de cada artículo y la lista de pedido anterior. El \"inventario objetivo\" es opcional: si se deja en blanco, equivale al doble del umbral.",
+      days:["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"],
+      months:["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"]
+    }
+  };
+
+  function getStoredLang(){
+    try {
+      var v = window.localStorage.getItem("lm-stock-lang");
+      if (v==="fr" || v==="en" || v==="es") return v;
+    } catch(e){}
+    return "fr";
+  }
+  function storeLang(lang){
+    try { window.localStorage.setItem("lm-stock-lang", lang); } catch(e){}
+  }
+
+  function t(key, vars){
+    var dict = I18N[state.lang] || I18N.fr;
+    var str = (key in dict) ? dict[key] : (I18N.fr[key]!==undefined ? I18N.fr[key] : key);
+    if (vars){
+      Object.keys(vars).forEach(function(k){
+        str = str.replace(new RegExp("\\{"+k+"\\}","g"), vars[k]);
+      });
+    }
+    return str;
+  }
+
+  function catLabel(key){ return t("cat_"+key); }
+
+  // Small count-dependent phrases, handled directly (not through the flat
+  // I18N table) so each language gets correct singular/plural agreement.
+  function trTrackedCount(n){
+    if (state.lang==="en") return n + (n===1 ? " item tracked" : " items tracked");
+    if (state.lang==="es") return n + (n===1 ? " artículo monitoreado" : " artículos monitoreados");
+    return n + (n===1 ? " article suivi" : " articles suivis");
+  }
+  function trLowStockCount(n){
+    if (state.lang==="en") return n + " low stock";
+    if (state.lang==="es") return n + " con inventario bajo";
+    return n + " en stock bas";
+  }
+  function trArticleCount(n){
+    if (state.lang==="en") return n + (n===1 ? " item" : " items");
+    if (state.lang==="es") return n + (n===1 ? " artículo" : " artículos");
+    return n + (n>1 ? " articles" : " article");
+  }
+
+  // Item-catalogue translations for the seeded (fixed) product list, en/es only —
+  // French is the data of record and is what's stored in the shared database.
+  // Items added later by staff (custom additions) simply show their stored name
+  // in every language, since there is no translation on file for them.
+  var ITEM_I18N = {
+    "yoplait-gogurt":{en:{name:"Yoplait Go-Gurt Yogurt Drinks",pack:"32 ct"},es:{name:"Yogures para beber Yoplait Go-Gurt",pack:"32 ct"}},
+    "babybel":{en:{name:"Mini Babybel Cheese",pack:"26 ct"},es:{name:"Queso Mini Babybel",pack:"26 ct"}},
+    "string-cheese":{en:{name:"String Cheese",pack:"48 ct"},es:{name:"Queso en hebras",pack:"48 ct"}},
+    "applesauce":{en:{name:"Applesauce Pouches",pack:"50 pouches"},es:{name:"Puré de manzana (bolsitas)",pack:"50 bolsitas"}},
+    "belvita":{en:{name:"Belvita Bites Biscuits",pack:"36 packs"},es:{name:"Galletas Belvita Bites",pack:"36 paquetes"}},
+    "mini-cookies":{en:{name:"Assorted Mini Cookies",pack:"36 packs, 1 oz",note:"20 chocolate chip + 16 alphabet cookies"},es:{name:"Surtido de mini galletas",pack:"36 paquetes, 1 oz",note:"20 con chispas de chocolate + 16 de alfabeto"}},
+    "animal-cookies":{en:{name:"Animal Crackers",pack:"36 packs"},es:{name:"Galletas de animalitos",pack:"36 paquetes"}},
+    "veggie-straws":{en:{name:"Veggie Straws",pack:"30 packs"},es:{name:"Palitos de vegetales",pack:"30 paquetes"}},
+    "ritz-bites":{en:{name:"Ritz Bits Cheese Sandwich Crackers",pack:"30 packs"},es:{name:"Ritz Bits sándwich de queso",pack:"30 paquetes"}},
+    "ritz-crackers":{en:{name:"Ritz Crackers",pack:"18 packs"},es:{name:"Galletas Ritz",pack:"18 paquetes"}},
+    "skinny-pop":{en:{name:"Skinny Pop Popcorn",pack:"28 packs"},es:{name:"Palomitas Skinny Pop",pack:"28 paquetes"}},
+    "pirates-booty":{en:{name:"Pirate's Booty Puffs",pack:"40 packs"},es:{name:"Puffs Pirate's Booty",pack:"40 paquetes"}},
+    "bananas":{en:{name:"Bananas",pack:"by weight"},es:{name:"Plátanos",pack:"por peso"}},
+    "mandarins":{en:{name:"Mandarins",pack:"bag"},es:{name:"Mandarinas",pack:"bolsa"}},
+    "lysol":{en:{name:"Lysol Disinfectant Spray",pack:"pack of 3"},es:{name:"Aerosol desinfectante Lysol",pack:"paquete de 3"}},
+    "febreze":{en:{name:"Febreze Mist Air Freshener",pack:"pack of 4"},es:{name:"Ambientador Febreze Mist",pack:"paquete de 4"}},
+    "clorox-wipes":{en:{name:"Clorox Disinfecting Wipes",pack:"pack of 5"},es:{name:"Toallitas desinfectantes Clorox",pack:"paquete de 5"}},
+    "odoban":{en:{name:"Odoban Laundry Disinfectant",pack:"unit"},es:{name:"Desinfectante para lavandería Odoban",pack:"unidad"}},
+    "paper-towel":{en:{name:"Paper Towels",pack:"15 rolls"},es:{name:"Toallas de papel",pack:"15 rollos"}},
+    "toilet-paper":{en:{name:"Toilet Paper",pack:"45 rolls"},es:{name:"Papel higiénico",pack:"45 rollos"}},
+    "facial-tissue":{en:{name:"Facial Tissues",pack:"pack of 12"},es:{name:"Pañuelos faciales",pack:"paquete de 12"}},
+    "baby-wipes":{en:{name:"Baby Wipes",pack:"pack of 12"},es:{name:"Toallitas para bebé",pack:"paquete de 12"}},
+    "trash-12gal":{en:{name:"12-Gallon Trash Bags",pack:"200 units"},es:{name:"Bolsas de basura de 12 galones",pack:"200 unidades"}},
+    "trash-10gal":{en:{name:"10-Gallon Trash Bags",pack:"1000 units"},es:{name:"Bolsas de basura de 10 galones",pack:"1000 unidades"}},
+    "trash-30gal":{en:{name:"30-Gallon Trash Bags",pack:"roll"},es:{name:"Bolsas de basura de 30 galones",pack:"rollo"}},
+    "food-gloves":{en:{name:"Disposable Food-Service Gloves",pack:"pack of 4"},es:{name:"Guantes desechables para alimentos",pack:"paquete de 4"}},
+    "gloves-m":{en:{name:"Gloves — Size M",pack:"pack of 10"},es:{name:"Guantes talla M",pack:"paquete de 10"}},
+    "coffee-pods":{en:{name:"Coffee Pods",pack:"100 units"},es:{name:"Cápsulas de café",pack:"100 unidades"}},
+    "ziploc-big":{en:{name:"Large Ziploc Bags",pack:"box"},es:{name:"Bolsas Ziploc grandes",pack:"caja"}},
+    "dish-soap":{en:{name:"Liquid Dish Soap",pack:"bottle"},es:{name:"Jabón líquido para platos",pack:"botella"}},
+    "plastic-cups":{en:{name:"Plastic Cups",pack:"pack"},es:{name:"Vasos de plástico",pack:"paquete"}},
+    "plastic-plates":{en:{name:"Plastic Plates",pack:"pack"},es:{name:"Platos de plástico",pack:"paquete"}},
+    "utensils":{en:{name:"Utensils (forks, spoons, knives)",pack:"pack"},es:{name:"Utensilios (tenedores, cucharas, cuchillos)",pack:"paquete"}},
+    "napkins":{en:{name:"Napkins",pack:"pack"},es:{name:"Servilletas",pack:"paquete"}},
+    "hand-soap":{en:{name:"Hand Soap",pack:"1 gallon"},es:{name:"Jabón de manos",pack:"1 galón"}},
+    "hand-sanitizer":{en:{name:"Hand Sanitizer",pack:"bottle"},es:{name:"Gel desinfectante para manos",pack:"botella"}},
+    "foaming-soap-refill":{en:{name:"Foaming Soap Refill",pack:"unit"},es:{name:"Recarga de jabón espumoso",pack:"unidad"}},
+    "laundry-detergent":{en:{name:"Liquid Laundry Detergent",pack:"bottle"},es:{name:"Detergente líquido para ropa",pack:"botella"}},
+    "trash-baby-room":{en:{name:"Baby Room Trash Bags",pack:"roll of 10"},es:{name:"Bolsas de basura sala de bebés",pack:"rollo de 10"}},
+    "batteries-aa-small":{en:{name:"AA Batteries — Small",pack:"pack"},es:{name:"Pilas AA — pequeñas",pack:"paquete"}},
+    "batteries-aa-medium":{en:{name:"AA Batteries — Medium",pack:"pack"},es:{name:"Pilas AA — medianas",pack:"paquete"}},
+    "batteries-aa-large":{en:{name:"AA Batteries — Large",pack:"pack"},es:{name:"Pilas AA — grandes",pack:"paquete"}},
+    "creamer":{en:{name:"Coffee Creamer",pack:"192 units"},es:{name:"Crema para café",pack:"192 unidades"}},
+    "tea-bags":{en:{name:"Tea Bags",pack:"box"},es:{name:"Bolsitas de té",pack:"caja"}},
+    "sugar":{en:{name:"Sugar",pack:"2000 units"},es:{name:"Azúcar",pack:"2000 unidades"}},
+    "gp-dispenser":{en:{name:"GP Dispenser Rolls",pack:"pack of 6"},es:{name:"Rollos dispensador GP",pack:"paquete de 6"}},
+    "shoe-covers":{en:{name:"Disposable Shoe Covers",pack:"pack"},es:{name:"Cubrezapatos desechables",pack:"paquete"}},
+    "printer-paper":{en:{name:"Printer Paper",pack:"ream"},es:{name:"Papel para impresora",pack:"resma"}},
+    "cardstock":{en:{name:"Cardstock Paper",pack:"pack"},es:{name:"Papel cartulina",pack:"paquete"}}
+  };
+
+  function itemDisplayName(it){
+    var tr = it && ITEM_I18N[it.id];
+    if (tr && tr[state.lang] && tr[state.lang].name) return tr[state.lang].name;
+    return it ? it.name : "";
+  }
+  function itemDisplayPack(it){
+    var tr = it && ITEM_I18N[it.id];
+    if (tr && tr[state.lang] && tr[state.lang].pack!=null) return tr[state.lang].pack;
+    return it ? (it.pack||"") : "";
+  }
+  function itemDisplayNote(it){
+    var tr = it && ITEM_I18N[it.id];
+    if (tr && tr[state.lang] && tr[state.lang].note!=null) return tr[state.lang].note;
+    return it ? (it.note||"") : "";
+  }
+  function displayNameForItemId(itemId, fallbackName){
+    var it = state.items[itemId];
+    if (it) return itemDisplayName(it);
+    return fallbackName || t("unknownArticle");
+  }
+
+  var CATS = [
+    {key:"collations", color:"var(--gold)"},
+    {key:"mensuel", color:"var(--teal)"},
+    {key:"occasionnel", color:"var(--marigold)"}
+  ];
+
+
+  // Local-only fallback catalogue, used ONLY when the shared database
+  // capability is unavailable in this view, so the tool still opens
+  // populated and useful (unsaved, session-only).
+  var FALLBACK_ITEMS = [
+    ["yoplait-gogurt","collations",1,"Yaourts à boire Yoplait Go-Gurt","32 ct",""],
+    ["babybel","collations",2,"Fromage Mini Babybel","26 ct",""],
+    ["string-cheese","collations",3,"Fromage en ficelle","48 ct",""],
+    ["applesauce","collations",4,"Compote de pommes","50 sachets",""],
+    ["belvita","collations",5,"Biscuits Belvita Bites","36 sachets",""],
+    ["mini-cookies","collations",6,"Assortiment de mini biscuits","36 sachets, 1 oz","20 pépites de chocolat + 16 biscuits alphabet"],
+    ["animal-cookies","collations",7,"Biscuits animaux","36 sachets",""],
+    ["veggie-straws","collations",8,"Bâtonnets de légumes séchés","30 sachets",""],
+    ["ritz-bites","collations",9,"Ritz Bites sandwich au fromage","30 sachets",""],
+    ["ritz-crackers","collations",10,"Craquelins Ritz","18 sachets",""],
+    ["skinny-pop","collations",11,"Popcorn Skinny Pop","28 sachets",""],
+    ["pirates-booty","collations",12,"Puffs Pirate's Booty","40 sachets",""],
+    ["bananas","collations",13,"Bananes","au poids",""],
+    ["mandarins","collations",14,"Mandarines","sac",""],
+    ["lysol","mensuel",1,"Spray désinfectant Lysol","paquet de 3",""],
+    ["febreze","mensuel",2,"Assainisseur d'air Febreze Mist","paquet de 4",""],
+    ["clorox-wipes","mensuel",3,"Lingettes désinfectantes Clorox","paquet de 5",""],
+    ["odoban","mensuel",4,"Désinfectant à lessive Odoban","unité",""],
+    ["paper-towel","mensuel",5,"Essuie-tout","15 rouleaux",""],
+    ["toilet-paper","mensuel",6,"Papier toilette","45 rouleaux",""],
+    ["facial-tissue","mensuel",7,"Mouchoirs en papier","paquet de 12",""],
+    ["baby-wipes","mensuel",8,"Lingettes pour bébé","paquet de 12",""],
+    ["trash-12gal","mensuel",9,"Sacs poubelle 12 gallons","200 unités",""],
+    ["trash-10gal","mensuel",10,"Sacs poubelle 10 gallons","1000 unités",""],
+    ["trash-30gal","mensuel",11,"Sacs poubelle 30 gallons","rouleau",""],
+    ["food-gloves","mensuel",12,"Gants alimentaires jetables","paquet de 4",""],
+    ["gloves-m","mensuel",13,"Gants taille M","paquet de 10",""],
+    ["coffee-pods","mensuel",14,"Dosettes de café","100 unités",""],
+    ["ziploc-big","mensuel",15,"Sacs Ziploc grand format","boîte",""],
+    ["dish-soap","occasionnel",1,"Savon à vaisselle liquide","bouteille",""],
+    ["plastic-cups","occasionnel",2,"Gobelets en plastique","paquet",""],
+    ["plastic-plates","occasionnel",3,"Assiettes en plastique","paquet",""],
+    ["utensils","occasionnel",4,"Ustensiles (fourchettes, cuillères, couteaux)","paquet",""],
+    ["napkins","occasionnel",5,"Serviettes de table","paquet",""],
+    ["hand-soap","occasionnel",6,"Savon pour les mains","1 gallon",""],
+    ["hand-sanitizer","occasionnel",7,"Gel désinfectant pour les mains","bouteille",""],
+    ["foaming-soap-refill","occasionnel",8,"Recharge de savon moussant","unité",""],
+    ["laundry-detergent","occasionnel",9,"Détergent à lessive liquide","bouteille",""],
+    ["trash-baby-room","occasionnel",10,"Sacs poubelle salle des bébés","rouleau de 10",""],
+    ["batteries-aa-small","occasionnel",11,"Piles AA — petites","paquet",""],
+    ["batteries-aa-medium","occasionnel",12,"Piles AA — moyennes","paquet",""],
+    ["batteries-aa-large","occasionnel",13,"Piles AA — grandes","paquet",""],
+    ["creamer","occasionnel",14,"Crème pour le café","192 unités",""],
+    ["tea-bags","occasionnel",15,"Sachets de thé","boîte",""],
+    ["sugar","occasionnel",16,"Sucre","2000 unités",""],
+    ["gp-dispenser","occasionnel",17,"Rouleaux distributeur GP","paquet de 6",""],
+    ["shoe-covers","occasionnel",18,"Couvre-chaussures jetables","paquet",""],
+    ["printer-paper","occasionnel",19,"Papier pour imprimante","ramette",""],
+    ["cardstock","occasionnel",20,"Papier cartonné (cardstock)","paquet",""]
+  ].map(function(r){
+    return {id:r[0], category:r[1], order:r[2], name:r[3], pack:r[4], note:r[5],
+      qtyOnHand:null, reorderThreshold:null, targetStock:null, unitCost:null, photo:null};
+  });
+
+  var state = {
+    items:{},          // id -> item data
+    dbMode:"connecting", // connecting | live | local
+    filter:"all",
+    search:"",
+    pendingTimers:{},
+    lang:getStoredLang()
+  };
+
+  var currencyFmt = new Intl.NumberFormat("en-US", {style:"currency", currency:"USD"});
+  function fmtMoney(n){ return n==null ? null : currencyFmt.format(n); }
+  function nowISO(){ return new Date().toISOString(); }
+
+  function catInfo(key){
+    for (var i=0;i<CATS.length;i++){ if (CATS[i].key===key) return CATS[i]; }
+    return CATS[0];
+  }
+
+  function getStatus(item){
+    var qty = item.qtyOnHand, threshold = item.reorderThreshold;
+    if (qty===null || qty===undefined) return {key:"unset", label:t("statusUnset"), pill:"neutral"};
+    if (threshold===null || threshold===undefined) return {key:"nothreshold", label:t("statusNoThreshold"), pill:"neutral"};
+    if (qty<=0) return {key:"critical", label:t("statusOut"), pill:"critical"};
+    if (qty<=threshold) return {key:"critical", label:t("statusToOrder"), pill:"critical"};
+    if (qty<=threshold*1.3) return {key:"warn", label:t("statusLow"), pill:"warn"};
+    return {key:"good", label:t("statusOk"), pill:"good"};
+  }
+
+  function suggestedQty(item){
+    var qty = item.qtyOnHand==null ? 0 : item.qtyOnHand;
+    var threshold = item.reorderThreshold;
+    var target = item.targetStock!=null ? item.targetStock : (threshold!=null ? threshold*2 : null);
+    if (target==null) return null;
+    var s = Math.ceil(target - qty);
+    return s>0 ? s : 1;
+  }
+
+  function itemsArray(){
+    var arr = [];
+    for (var id in state.items){ if (state.items.hasOwnProperty(id)) arr.push(state.items[id]); }
+    return arr;
+  }
+
+  function visibleItems(){
+    var q = state.search.trim().toLowerCase();
+    return itemsArray().filter(function(it){
+      if (state.filter!=="all" && it.category!==state.filter) return false;
+      if (q){
+        var hay = (it.name+" "+(it.pack||"")+" "+itemDisplayName(it)+" "+itemDisplayPack(it)).toLowerCase();
+        if (hay.indexOf(q)===-1) return false;
+      }
+      return true;
+    });
+  }
+
+  /* ---------------- rendering ---------------- */
+
+  function captureFocus(){
+    var el = document.activeElement;
+    if (el && el.dataset && el.dataset.id && el.dataset.field){
+      return {id:el.dataset.id, field:el.dataset.field, selStart:el.selectionStart, selEnd:el.selectionEnd};
+    }
+    return null;
+  }
+  function restoreFocus(info){
+    if (!info) return;
+    var sel = '[data-id="'+CSS.escape(info.id)+'"][data-field="'+info.field+'"]';
+    var el = document.querySelector(sel);
+    if (el){
+      el.focus();
+      try { el.setSelectionRange(info.selStart, info.selEnd); } catch(e){}
+    }
+  }
+
+  function renderSync(){
+    var dot = document.getElementById("syncDot");
+    var label = document.getElementById("syncLabel");
+    var banner = document.getElementById("offlineBanner");
+    if (state.dbMode==="live"){
+      dot.className = "dot";
+      label.textContent = t("syncLive");
+      banner.classList.remove("show");
+    } else if (state.dbMode==="local"){
+      dot.className = "dot local";
+      label.textContent = t("syncLocal");
+      banner.classList.add("show");
+    } else {
+      dot.className = "dot local";
+      label.textContent = t("syncConnecting");
+      banner.classList.remove("show");
+    }
+  }
+
+  function renderKPIs(){
+    var all = itemsArray();
+    var totalValue = 0, hasAnyValue = false;
+    var toReorder = [], lowStock = 0, unset = 0;
+    all.forEach(function(it){
+      var st = getStatus(it);
+      if (it.qtyOnHand!=null && it.unitCost!=null){ totalValue += it.qtyOnHand*it.unitCost; hasAnyValue = true; }
+      if (st.key==="critical") toReorder.push(it);
+      if (st.key==="warn") lowStock++;
+      if (st.key==="unset") unset++;
+    });
+    var orderCost = 0, orderCostKnown = false;
+    toReorder.forEach(function(it){
+      var sq = suggestedQty(it);
+      if (sq!=null && it.unitCost!=null){ orderCost += sq*it.unitCost; orderCostKnown = true; }
+    });
+
+    var tiles = [
+      {label:t("kpiTotalValue"), value: hasAnyValue ? fmtMoney(totalValue) : "—",
+        sub: trTrackedCount(all.length), cls:""},
+      {label:t("kpiToReorder"), value: String(toReorder.length),
+        sub: trLowStockCount(lowStock), cls: toReorder.length>0 ? "accent-critical" : ""},
+      {label:t("kpiOrderCost"), value: orderCostKnown ? fmtMoney(orderCost) : "—",
+        sub:t("kpiOrderCostSub"), cls:"accent-indigo"},
+      {label:t("kpiUnset"), value:String(unset), sub:t("kpiUnsetSub"), cls:""}
+    ];
+    var html = tiles.map(function(tile){
+      return '<div class="kpi '+tile.cls+'"><div class="label">'+tile.label+'</div>'+
+        '<div class="value">'+tile.value+'</div><div class="sub">'+tile.sub+'</div></div>';
+    }).join("");
+    document.getElementById("kpis").innerHTML = html;
+  }
+
+  function renderReorderPanel(){
+    var all = itemsArray();
+    var toReorder = all.filter(function(it){ return getStatus(it).key==="critical"; })
+      .sort(function(a,b){ return (a.qtyOnHand||0)-(b.qtyOnHand||0); });
+    var panel = document.getElementById("reorderPanel");
+
+    if (toReorder.length===0){
+      panel.innerHTML =
+        '<div class="panel-head ok"><h2>'+t("reorderTitle")+'</h2><span class="tag">'+t("reorderNothingTag")+'</span></div>'+
+        '<div class="panel-body"><div class="empty-good">'+t("reorderAllGood")+'</div></div>';
+      return;
+    }
+
+    var total = 0, totalKnown = false;
+    var rows = toReorder.map(function(it){
+      var sq = suggestedQty(it);
+      var cost = (sq!=null && it.unitCost!=null) ? sq*it.unitCost : null;
+      if (cost!=null){ total += cost; totalKnown = true; }
+      return '<div class="order-row">'+
+        '<div><div class="name">'+esc(itemDisplayName(it))+'</div><div class="meta">'+esc(itemDisplayPack(it))+' · '+t("tableCurrent")+' '+(it.qtyOnHand!=null?it.qtyOnHand:"?")+' · '+t("tableThreshold")+' '+(it.reorderThreshold!=null?it.reorderThreshold:"?")+'</div></div>'+
+        '<div class="qty">'+(sq!=null ? t("reorderOrderQty",{n:sq}) : t("reorderDefineThreshold"))+'</div>'+
+        '<div class="qty">'+(it.unitCost!=null ? fmtMoney(it.unitCost)+t("reorderPerUnit") : t("reorderPriceUnknown"))+'</div>'+
+        '<div class="cost">'+(cost!=null ? fmtMoney(cost) : "—")+'</div>'+
+        '</div>';
+    }).join("");
+
+    panel.innerHTML =
+      '<div class="panel-head"><h2>'+t("reorderTitle")+'</h2>'+
+      '<span class="panel-total">'+(totalKnown ? fmtMoney(total) : "—")+'<span class="tag"> · '+trArticleCount(toReorder.length)+'</span></span></div>'+
+      '<div class="panel-body">'+rows+'</div>';
+  }
+
+  function renderChips(){
+    var chips = [{key:"all", label:t("chipAll")}].concat(CATS.map(function(c){ return {key:c.key, label:catLabel(c.key)}; }));
+    document.getElementById("filterChips").innerHTML = chips.map(function(c){
+      return '<button type="button" class="chip'+(state.filter===c.key?" active":"")+'" data-filter="'+c.key+'">'+c.label+'</button>';
+    }).join("");
+    Array.prototype.forEach.call(document.querySelectorAll(".chip"), function(btn){
+      btn.addEventListener("click", function(){
+        state.filter = btn.dataset.filter;
+        renderChips();
+        renderTable();
+      });
+    });
+  }
+
+  function esc(s){
+    return String(s==null?"":s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  function numInput(item, field, opts){
+    opts = opts || {};
+    var v = item[field];
+    var hasVal = v!=null;
+    return '<input type="number" inputmode="decimal" class="num-input'+(opts.cost?" cost":"")+(hasVal?" has-value":"")+
+      '" data-id="'+esc(item.id)+'" data-field="'+field+'" value="'+(hasVal?v:"")+
+      '" placeholder="'+(opts.placeholder||"—")+'" step="'+(opts.step||"1")+'" min="0">';
+  }
+
+  function renderTable(){
+    var items = visibleItems();
+    var byCat = {};
+    CATS.forEach(function(c){ byCat[c.key] = []; });
+    items.forEach(function(it){ if (byCat[it.category]) byCat[it.category].push(it); });
+
+    var focus = captureFocus();
+
+    var html = "";
+    CATS.forEach(function(cat){
+      var list = byCat[cat.key].slice().sort(function(a,b){ return a.order-b.order; });
+      if (state.filter!=="all" && state.filter!==cat.key) return;
+      if (list.length===0 && (state.search || state.filter!=="all")) return;
+
+      html += '<div class="category">';
+      html += '<div class="category-head" style="--cat-color:'+cat.color+'"><span class="cat-dot"></span><h2>'+catLabel(cat.key)+'</h2><span class="count">'+trArticleCount(list.length)+'</span></div>';
+
+      if (list.length===0){
+        html += '<div style="padding:14px 4px;color:var(--ink-soft);font-size:13.5px;">'+t("tableCategoryEmpty")+'</div>';
+      } else {
+        html += '<div class="table-scroll"><table><thead><tr>'+
+          '<th>'+t("tableArticle")+'</th><th class="num">'+t("tableCurrent")+'</th><th class="num">'+t("tableThreshold")+'</th><th class="num">'+t("tableTarget")+'</th>'+
+          '<th class="num">'+t("tableUnitCost")+'</th><th class="num">'+t("tableValue")+'</th><th>'+t("tableStatus")+'</th><th>'+t("tableTracking")+'</th><th></th>'+
+          '</tr></thead><tbody>';
+        list.forEach(function(it){
+          var st = getStatus(it);
+          var val = (it.qtyOnHand!=null && it.unitCost!=null) ? fmtMoney(it.qtyOnHand*it.unitCost) : "—";
+          var dName = itemDisplayName(it), dPack = itemDisplayPack(it), dNote = itemDisplayNote(it);
+          html += '<tr data-row="'+esc(it.id)+'">'+
+            '<td><div class="item-cell">'+
+              '<div class="photo-slot" data-photo="'+esc(it.id)+'" title="'+esc(t("photoUploadHint"))+'" role="button" tabindex="0">'+
+                (it.photo ? '<img class="item-thumb" src="'+esc(it.photo)+'" alt="" loading="lazy">' : '<span class="item-thumb-fallback">📦</span>')+
+                (it.photo ? '<button type="button" class="photo-remove" data-photo-remove="'+esc(it.id)+'" title="'+esc(t("photoRemove"))+'" aria-label="'+esc(t("photoRemove"))+'">✕</button>' : '')+
+              '</div>'+
+              '<div><div class="item-name">'+esc(dName)+'</div><div class="item-pack">'+esc(dPack)+'</div>'+
+              (dNote?'<div class="item-note">'+esc(dNote)+'</div>':'')+'</div></div></td>'+
+            '<td class="cell-num">'+numInput(it,"qtyOnHand")+'</td>'+
+            '<td class="cell-num">'+numInput(it,"reorderThreshold")+'</td>'+
+            '<td class="cell-num">'+numInput(it,"targetStock",{placeholder:"auto"})+'</td>'+
+            '<td class="cell-num">'+numInput(it,"unitCost",{cost:true,step:"0.01",placeholder:"$"})+'</td>'+
+            '<td class="value-cell'+(val==="—"?" muted":"")+'" data-value-for="'+esc(it.id)+'">'+val+'</td>'+
+            '<td><span class="pill '+st.pill+'" data-status-for="'+esc(it.id)+'">'+st.label+'</span></td>'+
+            '<td><span class="row-actions">'+
+              '<button type="button" class="dist-btn" data-dist-open="'+esc(it.id)+'" title="'+esc(t("distributeAction"))+'" aria-label="'+esc(t("distributeAria")+" "+dName)+'">📤</button>'+
+              '<button type="button" class="hist-btn" data-hist-open="'+esc(it.id)+'" title="'+esc(t("historyAction"))+'" aria-label="'+esc(t("historyAria")+" "+dName)+'">🕘</button>'+
+              '</span></td>'+
+            '<td><button type="button" class="del-btn" data-del="'+esc(it.id)+'" title="'+esc(t("deleteAction"))+'" aria-label="'+esc(t("deleteAction")+" "+dName)+'">✕</button></td>'+
+            '</tr>';
+        });
+        html += '</tbody></table></div>';
+      }
+      html += '</div>';
+    });
+
+    if (html===""){
+      html = '<div style="padding:28px 4px;color:var(--ink-soft);">'+t("tableGlobalEmpty")+'</div>';
+    }
+
+    document.getElementById("categories").innerHTML = html;
+    wireRowEvents();
+    restoreFocus(focus);
+  }
+
+  function updateRowDisplay(id){
+    var it = state.items[id];
+    if (!it) return;
+    var valCell = document.querySelector('[data-value-for="'+CSS.escape(id)+'"]');
+    var stPill = document.querySelector('[data-status-for="'+CSS.escape(id)+'"]');
+    if (valCell){
+      var val = (it.qtyOnHand!=null && it.unitCost!=null) ? fmtMoney(it.qtyOnHand*it.unitCost) : "—";
+      valCell.textContent = val;
+      valCell.classList.toggle("muted", val==="—");
+    }
+    if (stPill){
+      var st = getStatus(it);
+      stPill.textContent = st.label;
+      stPill.className = "pill "+st.pill;
+    }
+    var row = document.querySelector('tr[data-row="'+CSS.escape(id)+'"]');
+    if (row){
+      ["qtyOnHand","reorderThreshold","targetStock","unitCost"].forEach(function(f){
+        var inp = row.querySelector('[data-field="'+f+'"]');
+        if (inp && inp!==document.activeElement){
+          var v = it[f];
+          inp.value = v==null ? "" : v;
+          inp.classList.toggle("has-value", v!=null);
+        }
+      });
+    }
+  }
+
+  function wireRowEvents(){
+    Array.prototype.forEach.call(document.querySelectorAll(".num-input"), function(inp){
+      inp.addEventListener("input", function(){
+        var id = inp.dataset.id, field = inp.dataset.field;
+        var raw = inp.value;
+        var v = raw==="" ? null : parseFloat(raw);
+        if (v!=null && isNaN(v)) v = null;
+        if (state.items[id]) state.items[id][field] = v;
+        inp.classList.toggle("has-value", v!=null);
+        updateRowDisplay(id);
+        renderKPIs();
+        renderReorderPanel();
+        scheduleCommit(id, field, v);
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-del]"), function(btn){
+      btn.addEventListener("click", function(){
+        var id = btn.dataset.del;
+        var it = state.items[id];
+        if (!it) return;
+        if (!window.confirm(t("deleteConfirm",{name:itemDisplayName(it)}))) return;
+        deleteItem(id);
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-dist-open]"), function(btn){
+      btn.addEventListener("click", function(){ openDistributeModal(btn.dataset.distOpen); });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-hist-open]"), function(btn){
+      btn.addEventListener("click", function(){ openHistoryModal(btn.dataset.histOpen); });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".item-thumb"), function(img){
+      img.addEventListener("error", function(){
+        var span = document.createElement("span");
+        span.className = "item-thumb-fallback";
+        span.textContent = "📦";
+        img.replaceWith(span);
+      }, {once:true});
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-photo]"), function(slot){
+      slot.addEventListener("click", function(e){
+        if (e.target.closest("[data-photo-remove]")) return;
+        openPhotoPicker(slot.dataset.photo);
+      });
+      slot.addEventListener("keydown", function(e){
+        if (e.key==="Enter" || e.key===" "){ e.preventDefault(); openPhotoPicker(slot.dataset.photo); }
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-photo-remove]"), function(btn){
+      btn.addEventListener("click", function(e){
+        e.stopPropagation();
+        clearPhoto(btn.dataset.photoRemove);
+      });
+    });
+  }
+
+  /* ---------------- photo upload ---------------- */
+
+  var pendingPhotoItemId = null;
+
+  function openPhotoPicker(id){
+    pendingPhotoItemId = id;
+    var input = document.getElementById("photoFileInput");
+    if (input) input.click();
+  }
+
+  function setItemPhoto(id, dataUrl){
+    if (!state.items[id]) return;
+    state.items[id].photo = dataUrl;
+    renderTable();
+    commitField(id, "photo", dataUrl);
+  }
+
+  function clearPhoto(id){
+    if (!state.items[id]) return;
+    state.items[id].photo = null;
+    renderTable();
+    commitField(id, "photo", null);
+  }
+
+  function resizeImageFile(file, maxDim, quality, cb){
+    var reader = new FileReader();
+    reader.onload = function(e){
+      var img = new Image();
+      img.onload = function(){
+        var w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+        if (!w || !h){ cb(null); return; }
+        var scale = Math.min(1, maxDim/Math.max(w,h));
+        var cw = Math.max(1, Math.round(w*scale)), ch = Math.max(1, Math.round(h*scale));
+        var canvas = document.createElement("canvas");
+        canvas.width = cw; canvas.height = ch;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, cw, ch);
+        var dataUrl = null;
+        try { dataUrl = canvas.toDataURL("image/jpeg", quality); } catch(err){ dataUrl = null; }
+        cb(dataUrl);
+      };
+      img.onerror = function(){ cb(null); };
+      img.src = e.target.result;
+    };
+    reader.onerror = function(){ cb(null); };
+    reader.readAsDataURL(file);
+  }
+
+  /* ---------------- persistence (Google Sheets via Apps Script) ---------------- */
+
+  // 1) Créez un Google Sheet avec deux onglets "items" et "movements".
+  // 2) Extensions > Apps Script, collez le contenu de Code.gs, déployez comme
+  //    application web (exécuter en tant que "Moi", accès "Tout le monde").
+  // 3) Collez ici l'URL obtenue (se termine par /exec) et le même jeton secret
+  //    que celui défini dans Code.gs (variable TOKEN).
+  var SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbxGf8Je5130mTRum5aIfAxdUhMIrTV_G-OuuDmiKMBa1kaCXU6221Xi5pRMlLk6LMue/exec";               // <-- À REMPLIR
+  var SHEETS_API_TOKEN = "lamaternelle";  // <-- doit correspondre à TOKEN dans Code.gs
+  var SHEETS_POLL_MS = 25000;            // fréquence de rafraîchissement (ms)
+
+  var dbNS = null;
+  var itemsCol = null;
+  var movementsCol = null;
+  var movementsCache = [];
+  var sheetsPollTimer = null;
+
+  function sheetsRequest(action, payload){
+    // Content-Type text/plain évite le préflight CORS, qu'Apps Script gère mal.
+    return fetch(SHEETS_API_URL, {
+      method: "POST",
+      headers: {"Content-Type":"text/plain;charset=utf-8"},
+      body: JSON.stringify({token:SHEETS_API_TOKEN, action:action, payload:payload||{}})
+    }).then(function(r){ return r.json(); });
+  }
+
+  function matchFilter(row, f){
+    var v = row[f.field];
+    if (f.op==="==") return v===f.value;
+    if (f.op==="!=") return v!==f.value;
+    if (f.op===">=") return v!=null && v>=f.value;
+    if (f.op==="<=") return v!=null && v<=f.value;
+    if (f.op===">") return v!=null && v>f.value;
+    if (f.op==="<") return v!=null && v<f.value;
+    return true;
+  }
+
+  // Petit shim imitant l'API Firestore (where/limit/get) utilisée ailleurs
+  // dans ce fichier, mais lisant/filtrant des tableaux en mémoire côté client.
+  function makeQuery(getRows, qs){
+    qs = qs || {filters:[], limitN:null};
+    return {
+      where: function(field, op, value){
+        return makeQuery(getRows, {filters: qs.filters.concat([{field:field,op:op,value:value}]), limitN: qs.limitN});
+      },
+      limit: function(n){ return makeQuery(getRows, {filters: qs.filters, limitN:n}); },
+      get: function(){
+        var rows = getRows().filter(function(r){
+          return qs.filters.every(function(f){ return matchFilter(r,f); });
+        });
+        if (qs.limitN!=null) rows = rows.slice(0, qs.limitN);
+        return Promise.resolve({ docs: rows.map(function(r){ return {id:r.id, data:function(){ return r; }}; }) });
+      }
+    };
+  }
+
+  function makeItemsCollection(){
+    function rows(){ return Object.keys(state.items).map(function(id){ return Object.assign({id:id}, state.items[id]); }); }
+    return {
+      doc: function(id){
+        return {
+          id:id,
+          set: function(data){ return sheetsRequest("setDoc", {collection:"items", id:id, data:data}); },
+          update: function(data){ return sheetsRequest("updateDoc", {collection:"items", id:id, data:data}); },
+          delete: function(){ return sheetsRequest("deleteDoc", {collection:"items", id:id}); }
+        };
+      },
+      where: function(field, op, value){ return makeQuery(rows).where(field, op, value); }
+    };
+  }
+
+  function makeMovementsCollection(){
+    return {
+      add: function(data){
+        var id = "m"+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+        var full = Object.assign({id:id}, data);
+        movementsCache.push(full);
+        return sheetsRequest("addMovement", {id:id, data:data}).then(function(){
+          return { id:id, delete: function(){
+            var idx = movementsCache.indexOf(full);
+            if (idx>-1) movementsCache.splice(idx,1);
+            return sheetsRequest("deleteDoc", {collection:"movements", id:id});
+          }};
+        });
+      },
+      where: function(field, op, value){ return makeQuery(function(){ return movementsCache; }).where(field, op, value); }
+    };
+  }
+
+  function pollSheets(){
+    fetch(SHEETS_API_URL).then(function(r){ return r.json(); }).then(function(data){
+      if (!data || !data.ok) throw new Error("bad response");
+      var seenIds = {};
+      (data.items||[]).forEach(function(row){ seenIds[row.id] = true; applyDocSnapshot(row.id, row); });
+      Object.keys(state.items).forEach(function(id){ if (!seenIds[id]) delete state.items[id]; });
+      movementsCache = data.movements || [];
+      state.dbMode = "live";
+      renderSync(); renderKPIs(); renderReorderPanel(); renderTable();
+    }).catch(function(){
+      if (state.dbMode==="connecting") goLocal();
+    });
+  }
+
+  function scheduleCommit(id, field, value){
+    var key = id+"::"+field;
+    if (state.pendingTimers[key]) clearTimeout(state.pendingTimers[key]);
+    state.pendingTimers[key] = setTimeout(function(){
+      commitField(id, field, value);
+      delete state.pendingTimers[key];
+    }, 550);
+  }
+
+  function commitField(id, field, value){
+    if (state.dbMode!=="live" || !itemsCol) return;
+    var payload = {}; payload[field] = value; payload.updatedAt = nowISO();
+    itemsCol.doc(id).update(payload).catch(function(){ /* last-writer-wins; ignore */ });
+  }
+
+  function deleteItem(id){
+    delete state.items[id];
+    renderKPIs(); renderReorderPanel(); renderTable();
+    if (state.dbMode==="live" && itemsCol){
+      itemsCol.doc(id).delete().catch(function(){});
+    }
+  }
+
+  function addItem(data){
+    var id = (data.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"") || "article") + "-" + Math.random().toString(36).slice(2,7);
+    var order = 1;
+    itemsArray().forEach(function(it){ if (it.category===data.category && it.order>=order) order = it.order+1; });
+    var item = {id:id, category:data.category, order:order, name:data.name, pack:data.pack||"", note:"",
+      qtyOnHand:null, reorderThreshold:null, targetStock:null, unitCost:null, photo:null};
+    state.items[id] = item;
+    renderKPIs(); renderReorderPanel(); renderTable();
+    if (state.dbMode==="live" && itemsCol){
+      var payload = Object.assign({}, item, {createdAt:nowISO(), updatedAt:nowISO()});
+      delete payload.id;
+      itemsCol.doc(id).set(payload).catch(function(){});
+    }
+  }
+
+  function applyDocSnapshot(id, data){
+    state.items[id] = {
+      id:id,
+      category: data.category || "occasionnel",
+      order: typeof data.order==="number" ? data.order : 999,
+      name: data.name || "(sans nom)",
+      pack: data.pack || "",
+      note: data.note || "",
+      qtyOnHand: data.qtyOnHand==null ? null : data.qtyOnHand,
+      reorderThreshold: data.reorderThreshold==null ? null : data.reorderThreshold,
+      targetStock: data.targetStock==null ? null : data.targetStock,
+      unitCost: data.unitCost==null ? null : data.unitCost,
+      photo: data.photo || null
+    };
+  }
+
+  function initDb(){
+    if (!SHEETS_API_URL){ goLocal(); return; }
+    itemsCol = makeItemsCollection();
+    movementsCol = makeMovementsCollection();
+    pollSheets();
+    if (sheetsPollTimer) clearInterval(sheetsPollTimer);
+    sheetsPollTimer = setInterval(pollSheets, SHEETS_POLL_MS);
+  }
+
+  function goLocal(){
+    if (state.dbMode==="local") return;
+    state.dbMode = "local";
+    if (Object.keys(state.items).length===0){
+      FALLBACK_ITEMS.forEach(function(it){ state.items[it.id] = Object.assign({}, it); });
+    }
+    renderSync(); renderKPIs(); renderReorderPanel(); renderTable();
+  }
+
+  /* ---------------- receive-stock modal ---------------- */
+
+  var receiveSession = []; // {entryId, itemId, itemName, qty, date, movementDoc}
+
+  function todayStr(){
+    var d = new Date();
+    var tz = d.getTimezoneOffset()*60000;
+    return new Date(d.getTime()-tz).toISOString().slice(0,10);
+  }
+
+  function fmtDateLocal(iso){
+    var parts = (iso||"").split("-");
+    if (parts.length!==3) return iso||"";
+    return state.lang==="en" ? (parts[1]+"/"+parts[2]+"/"+parts[0]) : (parts[2]+"/"+parts[1]+"/"+parts[0]);
+  }
+
+  function populateReceiveProduct(){
+    var sel = document.getElementById("receiveProduct");
+    var current = sel.value;
+    var byCat = {};
+    CATS.forEach(function(c){ byCat[c.key] = []; });
+    itemsArray().forEach(function(it){ if (byCat[it.category]) byCat[it.category].push(it); });
+    var html = '<option value="">'+esc(t("receiveProductPlaceholder"))+'</option>';
+    CATS.forEach(function(cat){
+      var list = byCat[cat.key].slice().sort(function(a,b){ return a.order-b.order; });
+      if (list.length===0) return;
+      html += '<optgroup label="'+esc(catLabel(cat.key))+'">';
+      list.forEach(function(it){
+        var dName = itemDisplayName(it), dPack = itemDisplayPack(it);
+        html += '<option value="'+esc(it.id)+'">'+esc(dName)+(dPack?" ("+esc(dPack)+")":"")+'</option>';
+      });
+      html += '</optgroup>';
+    });
+    sel.innerHTML = html;
+    if (current && state.items[current]) sel.value = current;
+  }
+
+  function renderReceiveList(){
+    var box = document.getElementById("receiveList");
+    if (receiveSession.length===0){
+      box.innerHTML = '<div class="receive-empty">'+t("receiveEmpty")+'</div>';
+      return;
+    }
+    box.innerHTML = receiveSession.slice().reverse().map(function(entry){
+      var it = state.items[entry.itemId];
+      var dName = it ? itemDisplayName(it) : entry.itemName;
+      return '<div class="receive-entry">'+
+        '<div><div class="re-name">'+esc(dName)+'</div><div style="color:var(--ink-soft);font-size:12px;">'+fmtDateLocal(entry.date)+'</div></div>'+
+        '<div style="display:flex;align-items:center;gap:12px;">'+
+        '<span class="re-meta">+'+entry.qty+'</span>'+
+        '<button type="button" class="receive-undo" data-undo="'+entry.entryId+'">'+t("receiveUndo")+'</button>'+
+        '</div></div>';
+    }).join("");
+    Array.prototype.forEach.call(box.querySelectorAll("[data-undo]"), function(btn){
+      btn.addEventListener("click", function(){ undoReceiveEntry(btn.dataset.undo); });
+    });
+  }
+
+  function openReceiveModal(){
+    populateReceiveProduct();
+    document.getElementById("receiveDate").value = todayStr();
+    document.getElementById("receiveQty").value = "";
+    receiveSession = [];
+    renderReceiveList();
+    document.getElementById("receiveOverlay").classList.add("show");
+    document.getElementById("receiveProduct").focus();
+  }
+
+  function closeReceiveModal(){
+    document.getElementById("receiveOverlay").classList.remove("show");
+  }
+
+  function addReceiveEntry(){
+    var sel = document.getElementById("receiveProduct");
+    var qtyInput = document.getElementById("receiveQty");
+    var dateInput = document.getElementById("receiveDate");
+    var itemId = sel.value;
+    var qty = parseFloat(qtyInput.value);
+    var date = dateInput.value || todayStr();
+
+    if (!itemId){ sel.focus(); return; }
+    if (!qty || qty<=0 || isNaN(qty)){ qtyInput.focus(); return; }
+
+    var it = state.items[itemId];
+    if (!it) return;
+
+    var newQty = (it.qtyOnHand==null ? 0 : it.qtyOnHand) + qty;
+    it.qtyOnHand = newQty;
+    updateRowDisplay(itemId);
+    renderKPIs();
+    renderReorderPanel();
+
+    if (state.dbMode==="live" && itemsCol){
+      itemsCol.doc(itemId).update({qtyOnHand:newQty, updatedAt:nowISO(), lastReceivedAt:date}).catch(function(){});
+    }
+
+    var entry = {entryId:"e"+Date.now()+Math.random().toString(36).slice(2,6), itemId:itemId, itemName:it.name, qty:qty, date:date, movementDoc:null};
+    receiveSession.push(entry);
+    renderReceiveList();
+
+    if (state.dbMode==="live" && movementsCol){
+      movementsCol.add({itemId:itemId, itemName:it.name, category:it.category, qty:qty, date:date, type:"reception", createdAt:nowISO()})
+        .then(function(ref){ entry.movementDoc = ref; })
+        .catch(function(){});
+    }
+
+    qtyInput.value = "";
+    sel.focus();
+  }
+
+  function undoReceiveEntry(entryId){
+    var idx = -1;
+    for (var i=0;i<receiveSession.length;i++){ if (receiveSession[i].entryId===entryId){ idx = i; break; } }
+    if (idx===-1) return;
+    var entry = receiveSession[idx];
+    var it = state.items[entry.itemId];
+    if (it){
+      var newQty = (it.qtyOnHand==null ? 0 : it.qtyOnHand) - entry.qty;
+      it.qtyOnHand = newQty;
+      updateRowDisplay(entry.itemId);
+      renderKPIs();
+      renderReorderPanel();
+      if (state.dbMode==="live" && itemsCol){
+        itemsCol.doc(entry.itemId).update({qtyOnHand:newQty, updatedAt:nowISO()}).catch(function(){});
+      }
+    }
+    if (entry.movementDoc){ entry.movementDoc.delete().catch(function(){}); }
+    receiveSession.splice(idx,1);
+    renderReceiveList();
+  }
+
+  /* ---------------- staff-name convenience (per-viewer, not shared state) ---------------- */
+
+  function getRecentNames(){
+    try {
+      var raw = window.localStorage.getItem("lm-stock-recent-names");
+      return raw ? JSON.parse(raw) : [];
+    } catch(e){ return []; }
+  }
+  function rememberName(name){
+    if (!name) return;
+    try {
+      var list = getRecentNames().filter(function(n){ return n.toLowerCase()!==name.toLowerCase(); });
+      list.unshift(name);
+      window.localStorage.setItem("lm-stock-recent-names", JSON.stringify(list.slice(0,10)));
+    } catch(e){ /* storage unavailable; not critical */ }
+  }
+  function populateByDatalist(){
+    var dl = document.getElementById("distributeByList");
+    if (!dl) return;
+    dl.innerHTML = getRecentNames().map(function(n){ return '<option value="'+esc(n)+'"></option>'; }).join("");
+  }
+
+  function periodLabel(p){ return p==="matin" ? t("periodMorning") : t("periodAfternoon"); }
+  function defaultPeriod(){ return new Date().getHours() < 12 ? "matin" : "apres-midi"; }
+
+  /* ---------------- distribute modal (sortie de stock, per article) ---------------- */
+
+  var distributeItemId = null;
+  var distributePeriod = "matin";
+
+  function openDistributeModal(id){
+    var it = state.items[id];
+    if (!it) return;
+
+    if (it.qtyOnHand==null || it.qtyOnHand<=0){
+      var row = document.querySelector('tr[data-row="'+CSS.escape(id)+'"]');
+      var qtyInput = row ? row.querySelector('[data-field="qtyOnHand"]') : null;
+      if (qtyInput){
+        qtyInput.focus();
+        qtyInput.classList.add("nudge");
+        setTimeout(function(){ qtyInput.classList.remove("nudge"); }, 900);
+      }
+      return;
+    }
+
+    distributeItemId = id;
+    distributePeriod = defaultPeriod();
+    var dName = itemDisplayName(it), dPack = itemDisplayPack(it);
+    document.getElementById("distributeTitle").textContent = t("distributeTitlePrefix")+dName;
+    document.getElementById("distributeSub").textContent = t("distributeCurrentStock")+it.qtyOnHand+(dPack?" ("+dPack+")":"");
+    document.getElementById("distributeDate").value = todayStr();
+    document.getElementById("distributeQty").value = "";
+    document.getElementById("distributeQty").max = it.qtyOnHand;
+    document.getElementById("distributeBy").value = "";
+    populateByDatalist();
+    renderPeriodToggle();
+    document.getElementById("distributeOverlay").classList.add("show");
+    document.getElementById("distributeQty").focus();
+  }
+
+  function renderPeriodToggle(){
+    Array.prototype.forEach.call(document.querySelectorAll("#distributePeriodToggle .period-opt"), function(btn){
+      btn.classList.toggle("selected", btn.dataset.period===distributePeriod);
+      btn.textContent = (btn.dataset.period==="matin" ? "🌅 " : "🌇 ") + periodLabel(btn.dataset.period);
+    });
+  }
+
+  function closeDistributeModal(){
+    document.getElementById("distributeOverlay").classList.remove("show");
+    distributeItemId = null;
+  }
+
+  function confirmDistributeModal(){
+    var id = distributeItemId;
+    var it = id ? state.items[id] : null;
+    if (!it) return;
+
+    var qtyInput = document.getElementById("distributeQty");
+    var qty = parseFloat(qtyInput.value);
+    if (!qty || qty<=0 || isNaN(qty)){ qtyInput.focus(); return; }
+
+    var date = document.getElementById("distributeDate").value || todayStr();
+    var by = document.getElementById("distributeBy").value.trim();
+
+    var current = it.qtyOnHand==null ? 0 : it.qtyOnHand;
+    var newQty = Math.max(0, current - qty);
+    it.qtyOnHand = newQty;
+    updateRowDisplay(id);
+    renderKPIs();
+    renderReorderPanel();
+
+    if (state.dbMode==="live" && itemsCol){
+      itemsCol.doc(id).update({qtyOnHand:newQty, updatedAt:nowISO()}).catch(function(){});
+    }
+    if (state.dbMode==="live" && movementsCol){
+      movementsCol.add({
+        itemId:id, itemName:it.name, category:it.category, qty:-qty, date:date,
+        period:distributePeriod, by:by||"", type:"distribution", createdAt:nowISO()
+      }).catch(function(){});
+    }
+    if (by) rememberName(by);
+
+    closeDistributeModal();
+  }
+
+  /* ---------------- per-article history modal ---------------- */
+
+  function openHistoryModal(id){
+    var it = state.items[id];
+    if (!it) return;
+    document.getElementById("historyTitle").textContent = t("historyTitlePrefix")+itemDisplayName(it);
+    document.getElementById("historySub").textContent = t("historySub");
+    var listEl = document.getElementById("historyList");
+    document.getElementById("historyOverlay").classList.add("show");
+
+    if (state.dbMode!=="live" || !movementsCol){
+      listEl.innerHTML = '<div class="stats-empty">'+t("historyLocalUnavailable")+'</div>';
+      return;
+    }
+    listEl.innerHTML = '<div class="stats-empty">'+t("historyLoading")+'</div>';
+    movementsCol.where("itemId","==",id).where("type","==","distribution").limit(100).get()
+      .then(function(snap){
+        var rows = snap.docs.map(function(d){ return d.data(); });
+        rows.sort(function(a,b){
+          var ka = (a.date||"")+"T"+(a.period==="matin"?"0":"1")+"-"+(a.createdAt||"");
+          var kb = (b.date||"")+"T"+(b.period==="matin"?"0":"1")+"-"+(b.createdAt||"");
+          return kb.localeCompare(ka);
+        });
+        if (rows.length===0){
+          listEl.innerHTML = '<div class="stats-empty">'+t("historyEmpty")+'</div>';
+          return;
+        }
+        listEl.innerHTML = rows.map(function(r){
+          var pClass = r.period==="apres-midi" ? "pm" : "";
+          return '<div class="history-entry">'+
+            '<div><span class="h-date">'+fmtDateLocal(r.date)+'</span>'+
+              (r.period ? '<span class="badge-period '+pClass+'">'+periodLabel(r.period)+'</span>' : '')+
+              '<div class="h-by">'+esc(r.by||t("historyUnknownBy"))+'</div></div>'+
+            '<div class="h-qty">−'+Math.abs(r.qty||0)+'</div>'+
+            '</div>';
+        }).join("");
+      })
+      .catch(function(){
+        listEl.innerHTML = '<div class="stats-empty">'+t("historyError")+'</div>';
+      });
+  }
+
+  function closeHistoryModal(){
+    document.getElementById("historyOverlay").classList.remove("show");
+  }
+
+  /* ---------------- stats & planning modal: weekly agenda ---------------- */
+
+  function dayNames(){ return I18N[state.lang].days; }
+  function monthNames(){ return I18N[state.lang].months; }
+  var agendaWeekStart = null;
+
+  function shiftDate(iso, days){
+    var d = new Date(iso+"T00:00:00");
+    d.setDate(d.getDate()+days);
+    return d.toISOString().slice(0,10);
+  }
+  function pad2(n){ return n<10 ? "0"+n : ""+n; }
+  function mondayOf(iso){
+    var d = new Date(iso+"T00:00:00");
+    var wd = d.getDay();
+    var diff = (wd===0 ? -6 : 1-wd);
+    d.setDate(d.getDate()+diff);
+    return d.toISOString().slice(0,10);
+  }
+  function weekdayIndex(iso){
+    var d = new Date(iso+"T00:00:00");
+    var wd = d.getDay();
+    return wd===0 ? 6 : wd-1;
+  }
+  function weekDates(monday){
+    var arr = [];
+    for (var i=0;i<7;i++) arr.push(shiftDate(monday,i));
+    return arr;
+  }
+  function fmtDayDate(iso){
+    var d = new Date(iso+"T00:00:00");
+    return pad2(d.getDate())+"/"+pad2(d.getMonth()+1);
+  }
+  function weekLabelText(monday){
+    var sunday = shiftDate(monday,6);
+    var dM = new Date(monday+"T00:00:00"), dS = new Date(sunday+"T00:00:00");
+    var sameMonth = dM.getMonth()===dS.getMonth() && dM.getFullYear()===dS.getFullYear();
+    var months = monthNames();
+    var left = dM.getDate() + (sameMonth ? "" : " "+months[dM.getMonth()]);
+    var right = dS.getDate()+" "+months[dS.getMonth()]+" "+dS.getFullYear();
+    return t("weekOf",{left:left,right:right});
+  }
+
+  function openStatsModal(){
+    document.getElementById("statsOverlay").classList.add("show");
+    switchStatsTab("agenda");
+  }
+  function closeStatsModal(){
+    document.getElementById("statsOverlay").classList.remove("show");
+  }
+
+  function switchStatsTab(tab){
+    Array.prototype.forEach.call(document.querySelectorAll("#statsTabs .stats-tab"), function(b){
+      b.classList.toggle("selected", b.dataset.tab===tab);
+    });
+    document.getElementById("agendaPane").style.display = tab==="agenda" ? "" : "none";
+    document.getElementById("planPane").style.display = tab==="plan" ? "" : "none";
+    if (tab==="agenda") renderAgendaWeek(agendaWeekStart || mondayOf(todayStr()));
+    else renderPlanWeek();
+  }
+
+  function buildAgendaSkeleton(monday, placeholder){
+    var dates = weekDates(monday);
+    var todayIso = todayStr();
+    var names = dayNames();
+    var html = '<div class="agenda-cell label">&nbsp;</div>';
+    dates.forEach(function(d,i){
+      html += '<div class="agenda-cell head'+(d===todayIso?" today":"")+'"><div class="d-name">'+names[i]+'</div><div class="d-date">'+fmtDayDate(d)+'</div></div>';
+    });
+    html += '<div class="agenda-cell label">🌅 '+t("periodMorning")+'</div>';
+    dates.forEach(function(){ html += '<div class="agenda-cell"><div class="agenda-empty-cell">'+placeholder+'</div></div>'; });
+    html += '<div class="agenda-cell label">🌇 '+t("periodAfternoon")+'</div>';
+    dates.forEach(function(){ html += '<div class="agenda-cell"><div class="agenda-empty-cell">'+placeholder+'</div></div>'; });
+    return html;
+  }
+
+  function slotCellHtml(entries, warnObj, wd, period){
+    if (!entries || Object.keys(entries).length===0) return '<div class="agenda-cell"><div class="agenda-empty-cell">—</div></div>';
+    var lines = Object.keys(entries).sort().map(function(name){
+      var isWarn = warnObj && warnObj[name+"|"+wd+"|"+period];
+      return '<div class="agenda-item-line'+(isWarn?" warn":"")+'">'+esc(name)+' <span class="qty">×'+entries[name]+'</span></div>';
+    }).join("");
+    return '<div class="agenda-cell">'+lines+'</div>';
+  }
+
+  function gridHeaderHtml(monday){
+    var dates = weekDates(monday);
+    var todayIso = todayStr();
+    var names = dayNames();
+    var html = '<div class="agenda-cell label">&nbsp;</div>';
+    dates.forEach(function(d,i){
+      html += '<div class="agenda-cell head'+(d===todayIso?" today":"")+'"><div class="d-name">'+names[i]+'</div><div class="d-date">'+fmtDayDate(d)+'</div></div>';
+    });
+    return html;
+  }
+
+  function groupBySlot(rows){
+    var map = {};
+    rows.forEach(function(r){
+      if (!r.date) return;
+      var wd = weekdayIndex(r.date);
+      var period = r.period==="apres-midi" ? "apres-midi" : "matin";
+      var key = wd+"|"+period;
+      if (!map[key]) map[key] = {};
+      var name = displayNameForItemId(r.itemId, r.itemName);
+      map[key][name] = (map[key][name]||0) + Math.abs(r.qty||0);
+    });
+    return map;
+  }
+
+  function renderAgendaWeek(monday){
+    agendaWeekStart = monday;
+    document.getElementById("agendaWeekLabel").textContent = weekLabelText(monday);
+    var msgEl = document.getElementById("agendaMessage");
+    var scrollEl = document.getElementById("agendaScroll");
+    var grid = document.getElementById("agendaGrid");
+
+    if (state.dbMode!=="live" || !movementsCol){
+      msgEl.textContent = t("statsAgendaUnavailable");
+      msgEl.style.display = "block";
+      scrollEl.style.display = "none";
+      return;
+    }
+    msgEl.style.display = "none";
+    scrollEl.style.display = "";
+    grid.innerHTML = buildAgendaSkeleton(monday, "…");
+
+    var sunday = shiftDate(monday,6);
+    movementsCol.where("type","==","distribution").where("date",">=",monday).where("date","<=",sunday).limit(1000).get()
+      .then(function(snap){
+        if (monday!==agendaWeekStart) return; // a newer week was requested meanwhile
+        var rows = snap.docs.map(function(d){ return d.data(); });
+        var bySlot = groupBySlot(rows);
+        var html = gridHeaderHtml(monday);
+        html += '<div class="agenda-cell label">🌅 '+t("periodMorning")+'</div>';
+        for (var i=0;i<7;i++) html += slotCellHtml(bySlot[i+"|matin"], null, i, "matin");
+        html += '<div class="agenda-cell label">🌇 '+t("periodAfternoon")+'</div>';
+        for (var j=0;j<7;j++) html += slotCellHtml(bySlot[j+"|apres-midi"], null, j, "apres-midi");
+        grid.innerHTML = html;
+      })
+      .catch(function(){
+        msgEl.textContent = t("statsAgendaError");
+        msgEl.style.display = "block";
+        scrollEl.style.display = "none";
+      });
+  }
+
+  function renderPlanWeek(){
+    var msgEl = document.getElementById("planMessage");
+    var scrollEl = document.getElementById("planScroll");
+    var grid = document.getElementById("planGrid");
+    var alertsEl = document.getElementById("planAlerts");
+    var nextMonday = shiftDate(mondayOf(todayStr()), 7);
+    document.getElementById("planWeekLabel").textContent = weekLabelText(nextMonday);
+    alertsEl.innerHTML = "";
+
+    if (state.dbMode!=="live" || !movementsCol){
+      msgEl.textContent = t("planUnavailable");
+      msgEl.style.display = "block";
+      scrollEl.style.display = "none";
+      return;
+    }
+    msgEl.style.display = "none";
+    scrollEl.style.display = "";
+    grid.innerHTML = buildAgendaSkeleton(nextMonday, "…");
+
+    var lookbackEnd = todayStr();
+    var lookbackStart = shiftDate(lookbackEnd, -27);
+    movementsCol.where("type","==","distribution").where("date",">=",lookbackStart).where("date","<=",lookbackEnd).limit(1000).get()
+      .then(function(snap){
+        var rows = snap.docs.map(function(d){ return d.data(); });
+        renderPlanFromHistory(rows, nextMonday);
+      })
+      .catch(function(){
+        msgEl.textContent = t("planError");
+        msgEl.style.display = "block";
+        scrollEl.style.display = "none";
+      });
+  }
+
+  function renderPlanFromHistory(rows, nextMonday){
+    var grid = document.getElementById("planGrid");
+    var alertsEl = document.getElementById("planAlerts");
+    var msgEl = document.getElementById("planMessage");
+    var scrollEl = document.getElementById("planScroll");
+
+    if (rows.length===0){
+      scrollEl.style.display = "none";
+      msgEl.style.display = "block";
+      msgEl.textContent = t("planEmpty");
+      return;
+    }
+    scrollEl.style.display = "";
+    msgEl.style.display = "none";
+
+    var items = {}; // itemId -> {name, weeksSeen:{}, slots:{}}
+    rows.forEach(function(r){
+      if (!r.date || !r.itemId) return;
+      if (!items[r.itemId]) items[r.itemId] = {name:displayNameForItemId(r.itemId, r.itemName), weeksSeen:{}, slots:{}};
+      var info = items[r.itemId];
+      info.weeksSeen[mondayOf(r.date)] = true;
+      var wd = weekdayIndex(r.date);
+      var period = r.period==="apres-midi" ? "apres-midi" : "matin";
+      var slotKey = wd+"|"+period;
+      info.slots[slotKey] = (info.slots[slotKey]||0) + Math.abs(r.qty||0);
+    });
+
+    var bySlot = {};
+    var warnObj = {};
+    var alerts = [];
+
+    Object.keys(items).forEach(function(itemId){
+      var info = items[itemId];
+      var weeksCount = Object.keys(info.weeksSeen).length || 1;
+      var projectedSlots = [];
+      for (var wd=0; wd<7; wd++){
+        ["matin","apres-midi"].forEach(function(period){
+          var sum = info.slots[wd+"|"+period] || 0;
+          var avg = Math.round(sum/weeksCount);
+          if (avg>0) projectedSlots.push({wd:wd, period:period, qty:avg});
+        });
+      }
+      if (projectedSlots.length===0) return;
+
+      projectedSlots.forEach(function(s){
+        var key = s.wd+"|"+s.period;
+        if (!bySlot[key]) bySlot[key] = {};
+        bySlot[key][info.name] = (bySlot[key][info.name]||0) + s.qty;
+      });
+
+      var currentItem = state.items[itemId];
+      if (currentItem && currentItem.qtyOnHand!=null){
+        var remaining = currentItem.qtyOnHand;
+        var shortfallSlot = null;
+        var ordered = projectedSlots.slice().sort(function(a,b){
+          return (a.wd*2+(a.period==="apres-midi"?1:0)) - (b.wd*2+(b.period==="apres-midi"?1:0));
+        });
+        ordered.forEach(function(s){
+          remaining -= s.qty;
+          if (remaining<0 && !shortfallSlot) shortfallSlot = s;
+        });
+        if (shortfallSlot){
+          warnObj[info.name+"|"+shortfallSlot.wd+"|"+shortfallSlot.period] = true;
+          alerts.push({name:info.name, day:dayNames()[shortfallSlot.wd], period:periodLabel(shortfallSlot.period), qtyOnHand:currentItem.qtyOnHand});
+        }
+      }
+    });
+
+    alertsEl.innerHTML = alerts.length===0
+      ? '<div class="plan-ok">'+t("planOk")+'</div>'
+      : alerts.map(function(a){
+          var msg = t("planAlertText",{name:esc(a.name),qty:a.qtyOnHand,day:esc(a.day),period:esc(a.period)});
+          return '<div class="plan-alert">⚠️&nbsp;<span>'+msg+'</span></div>';
+        }).join("");
+
+    var html = gridHeaderHtml(nextMonday);
+    html += '<div class="agenda-cell label">🌅 '+t("periodMorning")+'</div>';
+    for (var i=0;i<7;i++) html += slotCellHtml(bySlot[i+"|matin"], warnObj, i, "matin");
+    html += '<div class="agenda-cell label">🌇 '+t("periodAfternoon")+'</div>';
+    for (var j=0;j<7;j++) html += slotCellHtml(bySlot[j+"|apres-midi"], warnObj, j, "apres-midi");
+    grid.innerHTML = html;
+  }
+
+  /* ---------------- static i18n application ---------------- */
+
+  function populateCategorySelect(){
+    var sel = document.getElementById("newCategory");
+    var current = sel.value;
+    sel.innerHTML = CATS.map(function(c){ return '<option value="'+c.key+'">'+esc(catLabel(c.key))+'</option>'; }).join("");
+    if (current) sel.value = current;
+  }
+
+  function setText(id, key){
+    var el = document.getElementById(id);
+    if (el) el.textContent = t(key);
+  }
+  function setPlaceholder(id, key){
+    var el = document.getElementById(id);
+    if (el) el.placeholder = t(key);
+  }
+
+  function applyStaticI18n(){
+    document.documentElement.setAttribute("lang", state.lang);
+
+    setText("appTitle","appTitle");
+    setText("appSubtitle","appSubtitle");
+    document.getElementById("offlineBannerText").textContent = t("offlineBanner");
+
+    setText("addFormTitle","addFormTitle");
+    setText("newNameLabel","newNameLabel");
+    setPlaceholder("newName","newNamePlaceholder");
+    setText("newPackLabel","newPackLabel");
+    setPlaceholder("newPack","newPackPlaceholder");
+    setText("newCategoryLabel","newCategoryLabel");
+    populateCategorySelect();
+    setText("confirmAdd","confirmAdd");
+    setText("cancelAdd","cancelAdd");
+
+    setPlaceholder("searchInput","searchPlaceholder");
+    setText("showReceiveModal","showReceiveModal");
+    setText("showStatsModal","showStatsModal");
+    setText("showAddForm","showAddForm");
+
+    setText("receiveTitle","receiveTitle");
+    setText("receiveSub","receiveSub");
+    setText("receiveDateLabel","receiveDateLabel");
+    setText("receiveProductLabel","receiveProductLabel");
+    setText("receiveQtyLabel","receiveQtyLabel");
+    setPlaceholder("receiveQty","receiveQtyPlaceholder");
+    setText("receiveAddBtn","receiveAdd");
+    setText("receiveCloseBtn","receiveClose");
+    document.getElementById("receiveCloseX").setAttribute("aria-label", t("receiveClose"));
+
+    setText("distributeDateLabel","distributeDateLabel");
+    setText("distributeQtyLabel","distributeQtyLabel");
+    setPlaceholder("distributeQty","distributeQtyPlaceholder");
+    setText("distributeMomentLabel","distributeMomentLabel");
+    setText("distributeByLabel","distributeByLabel");
+    setPlaceholder("distributeBy","distributeByPlaceholder");
+    setText("distributeCancelBtn","distributeCancel");
+    setText("distributeConfirmBtn","distributeConfirm");
+    document.getElementById("distributeCloseX").setAttribute("aria-label", t("closeAria"));
+    renderPeriodToggle();
+
+    setText("historyCloseBtn","historyClose");
+    document.getElementById("historyCloseX").setAttribute("aria-label", t("historyClose"));
+
+    setText("statsTitle","statsTitle");
+    var agendaTabBtn = document.querySelector('#statsTabs [data-tab="agenda"]');
+    if (agendaTabBtn) agendaTabBtn.textContent = t("statsTabAgenda");
+    var planTabBtn = document.querySelector('#statsTabs [data-tab="plan"]');
+    if (planTabBtn) planTabBtn.textContent = t("statsTabPlan");
+    setText("agendaThisWeek","statsThisWeek");
+    setText("planIntro","planIntro");
+    setText("statsCloseBtn","statsClose");
+    document.getElementById("statsCloseX").setAttribute("aria-label", t("statsClose"));
+
+    setText("footerNote","footer");
+
+    Array.prototype.forEach.call(document.querySelectorAll("#langSwitch .lang-opt"), function(btn){
+      btn.classList.toggle("selected", btn.dataset.lang===state.lang);
+    });
+  }
+
+  function setLang(lang){
+    if (lang!=="fr" && lang!=="en" && lang!=="es") return;
+    state.lang = lang;
+    storeLang(lang);
+    applyStaticI18n();
+    renderChips();
+    renderSync();
+    renderKPIs();
+    renderReorderPanel();
+    renderTable();
+    if (document.getElementById("statsOverlay").classList.contains("show")){
+      var activeTab = document.querySelector("#statsTabs .stats-tab.selected");
+      switchStatsTab(activeTab ? activeTab.dataset.tab : "agenda");
+    }
+  }
+
+  /* ---------------- wiring ---------------- */
+
+  document.getElementById("searchInput").addEventListener("input", function(e){
+    state.search = e.target.value;
+    renderTable();
+  });
+  document.getElementById("showAddForm").addEventListener("click", function(){
+    document.getElementById("addForm").classList.add("show");
+    document.getElementById("newName").focus();
+  });
+  document.getElementById("cancelAdd").addEventListener("click", function(){
+    document.getElementById("addForm").classList.remove("show");
+  });
+  document.getElementById("confirmAdd").addEventListener("click", function(){
+    var name = document.getElementById("newName").value.trim();
+    var pack = document.getElementById("newPack").value.trim();
+    var category = document.getElementById("newCategory").value;
+    if (!name){ document.getElementById("newName").focus(); return; }
+    addItem({name:name, pack:pack, category:category});
+    document.getElementById("newName").value = "";
+    document.getElementById("newPack").value = "";
+    document.getElementById("addForm").classList.remove("show");
+  });
+
+  document.getElementById("showReceiveModal").addEventListener("click", openReceiveModal);
+  document.getElementById("receiveCloseBtn").addEventListener("click", closeReceiveModal);
+  document.getElementById("receiveCloseX").addEventListener("click", closeReceiveModal);
+  document.getElementById("receiveOverlay").addEventListener("click", function(e){
+    if (e.target===document.getElementById("receiveOverlay")) closeReceiveModal();
+  });
+  document.getElementById("receiveAddBtn").addEventListener("click", addReceiveEntry);
+  document.getElementById("receiveQty").addEventListener("keydown", function(e){
+    if (e.key==="Enter"){ e.preventDefault(); addReceiveEntry(); }
+  });
+
+  document.getElementById("distributeCloseX").addEventListener("click", closeDistributeModal);
+  document.getElementById("distributeCancelBtn").addEventListener("click", closeDistributeModal);
+  document.getElementById("distributeConfirmBtn").addEventListener("click", confirmDistributeModal);
+  document.getElementById("distributeOverlay").addEventListener("click", function(e){
+    if (e.target===document.getElementById("distributeOverlay")) closeDistributeModal();
+  });
+  document.getElementById("distributeQty").addEventListener("keydown", function(e){
+    if (e.key==="Enter"){ e.preventDefault(); confirmDistributeModal(); }
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("#distributePeriodToggle .period-opt"), function(btn){
+    btn.addEventListener("click", function(){ distributePeriod = btn.dataset.period; renderPeriodToggle(); });
+  });
+
+  document.getElementById("historyCloseX").addEventListener("click", closeHistoryModal);
+  document.getElementById("historyCloseBtn").addEventListener("click", closeHistoryModal);
+  document.getElementById("historyOverlay").addEventListener("click", function(e){
+    if (e.target===document.getElementById("historyOverlay")) closeHistoryModal();
+  });
+
+  document.getElementById("showStatsModal").addEventListener("click", openStatsModal);
+  document.getElementById("statsCloseX").addEventListener("click", closeStatsModal);
+  document.getElementById("statsCloseBtn").addEventListener("click", closeStatsModal);
+  document.getElementById("statsOverlay").addEventListener("click", function(e){
+    if (e.target===document.getElementById("statsOverlay")) closeStatsModal();
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("#statsTabs .stats-tab"), function(btn){
+    btn.addEventListener("click", function(){ switchStatsTab(btn.dataset.tab); });
+  });
+  document.getElementById("agendaPrevWeek").addEventListener("click", function(){
+    renderAgendaWeek(shiftDate(agendaWeekStart, -7));
+  });
+  document.getElementById("agendaNextWeek").addEventListener("click", function(){
+    renderAgendaWeek(shiftDate(agendaWeekStart, 7));
+  });
+  document.getElementById("agendaThisWeek").addEventListener("click", function(){
+    renderAgendaWeek(mondayOf(todayStr()));
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (e.key!=="Escape") return;
+    ["receiveOverlay","distributeOverlay","historyOverlay","statsOverlay"].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el && el.classList.contains("show")) el.classList.remove("show");
+    });
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll("#langSwitch .lang-opt"), function(btn){
+    btn.addEventListener("click", function(){ setLang(btn.dataset.lang); });
+  });
+
+  document.getElementById("photoFileInput").addEventListener("change", function(e){
+    var file = e.target.files && e.target.files[0];
+    e.target.value = "";
+    var id = pendingPhotoItemId;
+    pendingPhotoItemId = null;
+    if (!file || !id) return;
+    resizeImageFile(file, 240, 0.82, function(dataUrl){
+      if (dataUrl) setItemPhoto(id, dataUrl);
+    });
+  });
+
+  applyStaticI18n();
+  renderChips();
+  renderSync();
+  renderKPIs();
+  renderReorderPanel();
+  renderTable();
+  initDb();
+
+})();
+</script>
