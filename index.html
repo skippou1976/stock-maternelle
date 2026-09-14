@@ -217,6 +217,24 @@
   .order-qty-prefix{color:var(--ink-soft);font-size:12.5px;}
   .order-qty-input{width:56px;text-align:center;font-weight:600;font-size:13.5px;}
   .order-qty-unit{font-size:12.5px;font-weight:500;white-space:nowrap;}
+  .order-manual-tag{
+    font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;
+    color:var(--indigo);background:var(--indigo-soft,rgba(99,102,241,.12));
+    border-radius:999px;padding:2px 8px;vertical-align:middle;
+  }
+  .order-remove-btn{
+    border:none;background:none;color:var(--ink-soft);cursor:pointer;font-size:12px;
+    padding:2px 5px;border-radius:6px;vertical-align:middle;line-height:1;
+  }
+  .order-remove-btn:hover{color:var(--critical);background:var(--critical-soft);}
+  .order-add-row{
+    margin-top:12px;padding-top:12px;border-top:1px solid var(--border);
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .order-add-row select{
+    flex:1 1 220px;min-width:160px;border:1px solid var(--border);border-radius:8px;
+    padding:7px 9px;font-size:13px;background:var(--paper-sunken);color:var(--ink);
+  }
   .empty-good{padding:18px 4px;color:var(--good);font-size:14px;display:flex;gap:10px;align-items:center;}
 
   /* ---------- toolbar ---------- */
@@ -706,6 +724,10 @@
       reorderLastOrder:"Dernière commande : {qty} le {date}",
       reorderConfirmOrder:"Confirmer la commande",
       reorderExportExcel:"Exporter en Excel",
+      reorderAddPlaceholder:"Ajouter un article…",
+      reorderAddButton:"Ajouter",
+      reorderManualTag:"ajouté manuellement",
+      reorderRemove:"Retirer",
       xlsFilenamePrefix:"bon-de-commande",
       xlsCategory:"Catégorie",
       xlsSuggestedQty:"Qté suggérée (unités)",
@@ -835,6 +857,10 @@
       reorderLastOrder:"Last order: {qty} on {date}",
       reorderConfirmOrder:"Confirm order",
       reorderExportExcel:"Export to Excel",
+      reorderAddPlaceholder:"Add an item…",
+      reorderAddButton:"Add",
+      reorderManualTag:"manually added",
+      reorderRemove:"Remove",
       xlsFilenamePrefix:"purchase-order",
       xlsCategory:"Category",
       xlsSuggestedQty:"Suggested qty (units)",
@@ -964,6 +990,10 @@
       reorderLastOrder:"Último pedido: {qty} el {date}",
       reorderConfirmOrder:"Confirmar pedido",
       reorderExportExcel:"Exportar a Excel",
+      reorderAddPlaceholder:"Añadir un artículo…",
+      reorderAddButton:"Añadir",
+      reorderManualTag:"añadido manualmente",
+      reorderRemove:"Quitar",
       xlsFilenamePrefix:"orden-de-compra",
       xlsCategory:"Categoría",
       xlsSuggestedQty:"Cant. sugerida (unidades)",
@@ -1253,7 +1283,8 @@
     search:"",
     pendingTimers:{},
     lang:getStoredLang(),
-    orderQty:{}        // id -> quantité à commander saisie manuellement (en unité de commande), non persistée
+    orderQty:{},        // id -> quantité à commander saisie manuellement (en unité de commande), non persistée
+    manualOrderIds:{}   // id -> true : articles ajoutés à la main au bon de commande, non persistée
   };
 
   var currencyFmt = new Intl.NumberFormat("en-US", {style:"currency", currency:"USD"});
@@ -1324,6 +1355,39 @@
     return arr;
   }
 
+  // Liste du bon de commande : les articles sous leur seuil (automatique) +
+  // les articles ajoutés manuellement (même s'ils sont au-dessus de leur
+  // seuil), sans doublon.
+  function reorderList(){
+    var list = [], seen = {};
+    itemsArray().forEach(function(it){
+      if (getStatus(it).key==="critical"){ list.push(it); seen[it.id] = true; }
+    });
+    Object.keys(state.manualOrderIds).forEach(function(id){
+      if (seen[id]) return;
+      var it = state.items[id];
+      if (it){ list.push(it); seen[id] = true; }
+    });
+    list.sort(function(a,b){ return (a.qtyOnHand||0)-(b.qtyOnHand||0); });
+    return list;
+  }
+  function isManualOnly(it){
+    return !!state.manualOrderIds[it.id] && getStatus(it).key!=="critical";
+  }
+  // Options du menu "Ajouter un article", triées par catégorie puis par nom,
+  // en excluant les articles déjà présents dans le bon de commande.
+  function orderAddOptionsHtml(excludeIds){
+    var items = itemsArray().filter(function(it){ return !excludeIds[it.id]; });
+    items.sort(function(a,b){
+      var ca = catLabel(a.category), cb = catLabel(b.category);
+      if (ca!==cb) return ca.localeCompare(cb);
+      return itemDisplayName(a).localeCompare(itemDisplayName(b));
+    });
+    return items.map(function(it){
+      return '<option value="'+esc(it.id)+'">'+esc(catLabel(it.category))+' — '+esc(itemDisplayName(it))+'</option>';
+    }).join("");
+  }
+
   function visibleItems(){
     var q = state.search.trim().toLowerCase();
     return itemsArray().filter(function(it){
@@ -1392,7 +1456,7 @@
       if (st.key==="unset") unset++;
     });
     var orderCost = 0, orderCostKnown = false;
-    toReorder.forEach(function(it){
+    reorderList().forEach(function(it){
       var cost = orderRowCost(it, getOrderQty(it.id));
       if (cost!=null){ orderCost += cost; orderCostKnown = true; }
     });
@@ -1422,16 +1486,26 @@
   }
 
   function renderReorderPanel(){
-    var all = itemsArray();
-    var toReorder = all.filter(function(it){ return getStatus(it).key==="critical"; })
-      .sort(function(a,b){ return (a.qtyOnHand||0)-(b.qtyOnHand||0); });
+    var toReorder = reorderList();
+    var seen = {};
+    toReorder.forEach(function(it){ seen[it.id] = true; });
     var panel = document.getElementById("reorderPanel");
     var focus = captureFocus();
+
+    var addRowHtml =
+      '<div class="order-add-row">'+
+        '<select id="reorderAddSelect">'+
+          '<option value="">'+esc(t("reorderAddPlaceholder"))+'</option>'+
+          orderAddOptionsHtml(seen)+
+        '</select>'+
+        '<button type="button" class="btn ghost small" id="reorderAddBtn">+ '+t("reorderAddButton")+'</button>'+
+      '</div>';
 
     if (toReorder.length===0){
       panel.innerHTML =
         '<div class="panel-head ok"><h2>'+t("reorderTitle")+'</h2><span class="tag">'+t("reorderNothingTag")+'</span></div>'+
-        '<div class="panel-body"><div class="empty-good">'+t("reorderAllGood")+'</div></div>';
+        '<div class="panel-body"><div class="empty-good">'+t("reorderAllGood")+'</div>'+addRowHtml+'</div>';
+      wireReorderAddControl();
       return;
     }
 
@@ -1443,6 +1517,7 @@
       if (cost!=null){ total += cost; totalKnown = true; }
 
       var eqHint = orderEquivalentText(qty, size);
+      var manual = isManualOnly(it);
 
       var lastOrderLine = "";
       if (it.lastOrderPacks!=null){
@@ -1452,9 +1527,15 @@
         lastOrderLine = '<div class="order-last">'+esc(t("reorderLastOrder",{qty:unitTxt, date: it.lastOrderDate ? fmtDateLocal(it.lastOrderDate) : "—"}))+'</div>';
       }
 
+      var nameHtml = esc(itemDisplayName(it));
+      if (manual){
+        nameHtml += ' <span class="order-manual-tag">'+esc(t("reorderManualTag"))+'</span>'+
+          ' <button type="button" class="order-remove-btn" data-remove-manual="'+esc(it.id)+'" title="'+esc(t("reorderRemove"))+'">✕</button>';
+      }
+
       return '<div class="order-row">'+
         '<div class="order-row-main">'+
-        '<div><div class="name">'+esc(itemDisplayName(it))+'</div><div class="meta">'+esc(itemDisplayPack(it))+' · '+t("tableCurrent")+' '+(it.qtyOnHand!=null?it.qtyOnHand:"?")+' · '+t("tableThreshold")+' '+(it.reorderThreshold!=null?it.reorderThreshold:"?")+'</div></div>'+
+        '<div><div class="name">'+nameHtml+'</div><div class="meta">'+esc(itemDisplayPack(it))+' · '+t("tableCurrent")+' '+(it.qtyOnHand!=null?it.qtyOnHand:"?")+' · '+t("tableThreshold")+' '+(it.reorderThreshold!=null?it.reorderThreshold:"?")+'</div></div>'+
         '<div class="qty order-qty-row">'+
           '<span class="order-qty-prefix">'+esc(t("reorderQtyPrefix"))+'</span>'+
           '<input type="number" min="1" step="1" inputmode="numeric" class="order-unit-input order-qty-input" data-order-id="'+esc(it.id)+'" data-order-field="orderQty" value="'+esc(qty)+'">'+
@@ -1481,9 +1562,10 @@
       '<button type="button" class="btn ghost small" id="reorderConfirmBtn">✓ '+t("reorderConfirmOrder")+'</button>'+
       '<span class="panel-total">'+(totalKnown ? fmtMoney(total) : "—")+'<span class="tag"> · '+trArticleCount(toReorder.length)+'</span></span>'+
       '</div></div>'+
-      '<div class="panel-body">'+rows+'</div>';
+      '<div class="panel-body">'+rows+addRowHtml+'</div>';
 
     wireReorderEvents(toReorder);
+    wireReorderAddControl();
     restoreFocus(focus);
   }
 
@@ -1542,6 +1624,30 @@
     if (confirmBtn) confirmBtn.addEventListener("click", function(){ confirmReorder(toReorder); });
   }
 
+  // Contrôle "Ajouter un article" + boutons "✕" pour retirer un article
+  // ajouté manuellement (les articles sous leur seuil, eux, ne se retirent
+  // pas d'ici — ils disparaissent d'eux-mêmes une fois le stock reconstitué).
+  function wireReorderAddControl(){
+    var addBtn = document.getElementById("reorderAddBtn");
+    var select = document.getElementById("reorderAddSelect");
+    if (addBtn && select){
+      addBtn.addEventListener("click", function(){
+        var id = select.value;
+        if (!id) return;
+        state.manualOrderIds[id] = true;
+        renderReorderPanel();
+      });
+    }
+    Array.prototype.forEach.call(document.querySelectorAll("[data-remove-manual]"), function(btn){
+      btn.addEventListener("click", function(){
+        var id = btn.dataset.removeManual;
+        delete state.manualOrderIds[id];
+        delete state.orderQty[id];
+        renderReorderPanel();
+      });
+    });
+  }
+
   function confirmReorder(toReorder){
     var date = todayStr();
     toReorder.forEach(function(it){
@@ -1556,8 +1662,10 @@
       commitField(it.id, "lastOrderPacks", qty);
       commitField(it.id, "lastOrderLabel", label);
       commitField(it.id, "lastOrderDate", date);
-      // On repart à 1 pour la prochaine commande, une fois celle-ci confirmée.
+      // On repart à 1 pour la prochaine commande, une fois celle-ci confirmée,
+      // et on retire l'article de la liste ajoutée manuellement.
       delete state.orderQty[it.id];
+      delete state.manualOrderIds[it.id];
     });
     renderReorderPanel();
   }
