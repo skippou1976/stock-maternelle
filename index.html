@@ -339,6 +339,14 @@
   }
   .dist-btn:hover{background:var(--indigo-soft);color:var(--indigo);}
   .hist-btn:hover{background:var(--teal-soft);color:var(--indigo);}
+  .order-add-btn{
+    border:none;background:transparent;color:var(--ink-soft);cursor:pointer;font-size:15px;
+    padding:4px 6px;border-radius:6px;line-height:1;
+  }
+  .order-add-btn:hover{background:var(--good-soft);color:var(--good);}
+  .order-add-btn.active{background:var(--good-soft);color:var(--good);}
+  .order-add-btn:disabled{cursor:default;opacity:.55;}
+  .order-add-btn:disabled:hover{background:var(--good-soft);color:var(--good);}
   .num-input.nudge{border-color:var(--critical);background:var(--critical-soft);}
 
   /* ---------- period toggle (matin / après-midi) ---------- */
@@ -728,6 +736,9 @@
       reorderAddButton:"Ajouter",
       reorderManualTag:"ajouté manuellement",
       reorderRemove:"Retirer",
+      addToOrderAction:"Ajouter au bon de commande",
+      removeFromOrderAction:"Retirer du bon de commande",
+      alreadyInOrder:"Déjà dans le bon de commande",
       xlsFilenamePrefix:"bon-de-commande",
       xlsCategory:"Catégorie",
       xlsSuggestedQty:"Qté suggérée (unités)",
@@ -861,6 +872,9 @@
       reorderAddButton:"Add",
       reorderManualTag:"manually added",
       reorderRemove:"Remove",
+      addToOrderAction:"Add to purchase order",
+      removeFromOrderAction:"Remove from purchase order",
+      alreadyInOrder:"Already in the purchase order",
       xlsFilenamePrefix:"purchase-order",
       xlsCategory:"Category",
       xlsSuggestedQty:"Suggested qty (units)",
@@ -994,6 +1008,9 @@
       reorderAddButton:"Añadir",
       reorderManualTag:"añadido manualmente",
       reorderRemove:"Quitar",
+      addToOrderAction:"Añadir a la orden de compra",
+      removeFromOrderAction:"Quitar de la orden de compra",
+      alreadyInOrder:"Ya está en la orden de compra",
       xlsFilenamePrefix:"orden-de-compra",
       xlsCategory:"Categoría",
       xlsSuggestedQty:"Cant. sugerida (unidades)",
@@ -1797,6 +1814,20 @@
       '" placeholder="'+(opts.placeholder||"—")+'" step="'+(opts.step||"1")+'" min="0">';
   }
 
+  // Bouton "ajouter au bon de commande" affiché sur chaque article de la
+  // liste (plus facile à repérer avec les photos que le menu déroulant du
+  // panneau). Grisé/coché si l'article est déjà dans le bon de commande
+  // parce qu'il est sous son seuil (rien à basculer dans ce cas) ; sinon,
+  // bascule state.manualOrderIds.
+  function orderAddButtonHtml(it, st, dName){
+    if (st.key==="critical"){
+      return '<button type="button" class="order-add-btn active" disabled title="'+esc(t("alreadyInOrder"))+'" aria-label="'+esc(t("alreadyInOrder")+" "+dName)+'">🛒</button>';
+    }
+    var added = !!state.manualOrderIds[it.id];
+    var label = added ? t("removeFromOrderAction") : t("addToOrderAction");
+    return '<button type="button" class="order-add-btn'+(added?' active':'')+'" data-order-add="'+esc(it.id)+'" title="'+esc(label)+'" aria-label="'+esc(label+" "+dName)+'">🛒</button>';
+  }
+
   function renderTable(){
     var items = visibleItems();
     var byCat = {};
@@ -1840,6 +1871,7 @@
             '<td class="value-cell'+(val==="—"?" muted":"")+'" data-value-for="'+esc(it.id)+'">'+val+'</td>'+
             '<td><span class="pill '+st.pill+'" data-status-for="'+esc(it.id)+'">'+st.label+'</span></td>'+
             '<td><span class="row-actions">'+
+              orderAddButtonHtml(it, st, dName)+
               '<button type="button" class="dist-btn" data-dist-open="'+esc(it.id)+'" title="'+esc(t("distributeAction"))+'" aria-label="'+esc(t("distributeAria")+" "+dName)+'">📤</button>'+
               '<button type="button" class="hist-btn" data-hist-open="'+esc(it.id)+'" title="'+esc(t("historyAction"))+'" aria-label="'+esc(t("historyAria")+" "+dName)+'">🕘</button>'+
               '</span></td>'+
@@ -1910,6 +1942,15 @@
         if (!it) return;
         if (!window.confirm(t("deleteConfirm",{name:itemDisplayName(it)}))) return;
         deleteItem(id);
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-order-add]"), function(btn){
+      btn.addEventListener("click", function(){
+        var id = btn.dataset.orderAdd;
+        if (state.manualOrderIds[id]) delete state.manualOrderIds[id];
+        else state.manualOrderIds[id] = true;
+        renderTable();
+        renderReorderPanel();
       });
     });
     Array.prototype.forEach.call(document.querySelectorAll("[data-dist-open]"), function(btn){
